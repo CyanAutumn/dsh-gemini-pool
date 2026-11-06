@@ -1,264 +1,149 @@
-<div align="center">
+# dsh-gemini-pool（本地增强版）
 
-# dsh-gemini-pool
+把 **Antigravity（Google Cloud Code Assist）** 接入 [DeepSeek Harness](https://github.com/deepseek-ai) 的模型提供者插件：
+OAuth 登录、多账号池、**实时模型目录**（含 Gemini 4 Argon / Claude Opus 5.5）、聊天框额度显示，以及一套与官方 CLI 对齐的请求行为。
 
-**DSH 用上 Gemini 的方式 —— 让你的 Google AI Pro 订阅，成为编程模型池**
+> 这是 [qikairo7/dsh-gemini-pool](https://github.com/qikairo7/dsh-gemini-pool) 的 **fork 增强分支**（基于上游 `0.8.2`）。
+> 与上游的关系：保留其架构与 UI，替换了模型目录、请求体/请求头、错误处理与额度展示。
 
-[English](./README.en.md) · **简体中文**
+![模型列表](assets/screenshots/model-picker.png)
 
-<a href="https://github.com/qikairo7/dsh-gemini-pool/releases"><img src="https://img.shields.io/github/v/release/qikairo7/dsh-gemini-pool?color=369eff&labelColor=black&logo=github&style=flat-square" alt="release"></a>
-<a href="https://github.com/qikairo7/dsh-gemini-pool/stargazers"><img src="https://img.shields.io/github/stars/qikairo7/dsh-gemini-pool?color=ffcb47&labelColor=black&style=flat-square" alt="stars"></a>
-<a href="https://github.com/qikairo7/dsh-gemini-pool/issues"><img src="https://img.shields.io/github/issues/qikairo7/dsh-gemini-pool?color=ff80eb&labelColor=black&style=flat-square" alt="issues"></a>
-<a href="./LICENSE"><img src="https://img.shields.io/badge/license-MIT-white?labelColor=black&style=flat-square" alt="license"></a>
-<a href="https://github.com/qikairo7/dsh-gemini-pool/commits/master"><img src="https://img.shields.io/github/last-commit/qikairo7/dsh-gemini-pool?color=c4f042&labelColor=black&style=flat-square" alt="last commit"></a>
-<a href="https://github.com/qikairo7/dsh-gemini-pool/actions/workflows/check.yml"><img src="https://img.shields.io/github/actions/workflow/status/qikairo7/dsh-gemini-pool/check.yml?color=7ee787&labelColor=black&label=check&style=flat-square" alt="CI"></a>
+![额度弹层](assets/screenshots/quota-pill.png)
 
-[Issues](https://github.com/qikairo7/dsh-gemini-pool/issues) ·
-[讨论区](https://github.com/qikairo7/dsh-gemini-pool/discussions) ·
-[更新日志](./CHANGELOG.md) ·
-[安全策略](./SECURITY.md) ·
-[DeepSeek Harness](https://github.com/deepseek-ai/deepseek-harness) ·
-[上游项目](https://github.com/LiZhenNet/dsh-antigravity)
-
-</div>
+![设置页](assets/screenshots/settings-antigravity.png)
 
 ---
 
-## ✨ 这是什么
+## 功能
 
-[DeepSeek Harness（DSH）](https://github.com/deepseek-ai/deepseek-harness) 本身无法直连 Gemini。这个插件补上这条通路：通过 Google Antigravity / Cloud Code Assist 通道，把你已有的 **Google AI Pro 订阅**直接接入 DSH。不用另买 API key，订阅额度即用即扣。
+### 模型目录：从端点实时拉取，不再写死
 
-Gemini 的强项正好落在编程场景上：**多模态**看图、**前端与 UI** 代码生成质量出色，还能**生图**做界面素材。装上插件后，这些能力按订阅额度直接在 DSH 里使用。
+- 后端 `fetchAvailableModels` 返回什么就显示什么；带官方 CLI 身份标识时能拿到 **26 个模型**（不含时为 20 个，且生成会被 429）。
+- 变体自动合并：`gemini-4-argon-{low,medium,high}` 合并为一个「Gemini 4 Argon」条目，带 `runtimeIds` / `modelEnums` / `thinkingLevels`。
+- 新模型自动出现在列表里，无需改代码；设置页「刷新额度与模型列表」可手动触发。
 
-不止一个 Google 账号？全部加进来组成**账号池**：额度自动均衡、429 无感切换、坏账号自动冷却与探活恢复。设置页里每个账号一张卡片，每周与 5 小时额度实时可见。
+### 聊天框额度徽标
 
-<p align="center">
-  <img src="./assets/images/screenshots/settings-1.png" alt="dsh-gemini-pool 设置页" width="78%">
-</p>
+模型选择器左侧的 `AGY xx%`：显示本周剩余额度，点开看 Gemini / Claude & GPT / Gemini 4 Argon 三个桶的周额度与 5 小时额度及重置时间。
 
-## 🆚 为什么需要它
+### 请求行为对齐官方 CLI
 
-装与不装，同一个 Google AI Pro 订阅是两种用法：
+抓包比对后逐项对齐（详见 [docs/GENERATE-BODY-DIFF.md](docs/GENERATE-BODY-DIFF.md)）：
 
-| | 不装：订阅只在网页版 | 装：订阅接入 DSH |
-|---|:---:|:---:|
-| Gemini 多模态（看图） | ❌ 编程时用不上 | ✅ 对话里直接丢图 |
-| 前端 / UI 代码生成 | ❌ 网页版没有工程上下文 | ✅ 直接读懂你的项目 |
-| 生图做界面素材 | ⚠️ 来回切换复制 | ✅ `antigravity_image_generate` 自动出图入库 |
-| 多账号额度 | — | ✅ 全池调度，429 无感切换 |
-| 额度情况 | ❌ 黑盒 | ✅ 每账号实时额度条 |
-| 坏账号 | ❌ 反复撞死号 | ✅ 自动禁用 + 探活复活 |
-
-主模型本身没有视觉能力（纯文本模型）时，贴图会由池内 Gemini 自动转述成文字回喂主模型，默认开启，详见「👁 无视觉主模型的看图旁路」。
-
-> 使用本插件前，请先阅读下方的「⚠️ 封号风险」。
-
-## ⚠️ 封号风险，使用前必读
-
-本插件是非官方第三方工具，通过复用 Antigravity 客户端身份访问 Google 接口。**Google 已官方确认：使用第三方工具访问 Antigravity 资源属于服务条款违规，并已实施过大规模封禁**（见 [gemini-cli 官方公告](https://github.com/google-gemini/gemini-cli/discussions/20632)，2026 年 2 月，付费用户亦被波及）。
-
-**处罚机制**（Google 官方公布）：
-
-- 首次违规 → 邮件通知 + 填表重新认证 → 1~2 天自动解封
-- **第二次违规 → 永久封禁**
-- 封禁范围：多数报告为 Antigravity / Gemini 通道被封（已购订阅额度一并作废）；**是否连坐整个 Google 账号（Gmail / Drive），Google 被社区两次追问均未正面回答**——请按最坏可能对待
-- 执法为抽查式：大量第三方工具用户数月无事，但**没有人能保证下一个不是你**
-
-**降低风险的三条建议**：
-
-1. **用小号**：专门注册一个 Google 账号。不要用绑着重要资产的主力号。
-2. **克制用量**：内置的指数退避与冷却机制能降低风险。不要刻意压测额度上限。
-3. **做好通道随时失效的准备**：接口属于 Google，政策随时可能收紧。
-
-使用本插件即表示你已理解并自愿接受上述风险。本项目与 Google 无任何关联。
-
-## 💰 和 API 中转站有什么区别
-
-也可以去中转站按 token 付费买 Gemini API——那是另一种取舍：
-
-| | API 中转站 | dsh-gemini-pool |
-|---|:---:|:---:|
-| **钱** | 按 token 加价，站长赚差价 | 订阅费固定，用多少都是那份钱 |
-| **模型真假** | ⚠️ 可能被悄悄降级，难察觉 | ✅ 直连官方端点，模型永远是真的 |
-| **数据隐私** | ⚠️ 代码/对话/截图全部经过站长服务器 | ✅ 进程内直连 Google，不经过任何中间人 |
-| **额度透明** | 只剩一个「站点余额」数字 | 每账号每周 / 5 小时实时进度条 |
-| **跑路风险** | 站点跑路降质是常态，余额一夜清零 | 无第三方经手你的钱 |
-
-中转站的真实优势只有一条：**封号砸的是站长的号，你的账号干净**。所以分界线很简单：怕账号出事、用量小、想试用，选中转站；有订阅、重隐私、要真模型、长期用，选这里。
-
-## 🚀 快速开始
-
-**环境要求**：DSH 0.2.0-rc.2（当前验证版本）。运行 `dsh --version` 查看本机版本。
-
-**1. 安装插件**
-
-```bash
-dsh plugin --profile web add github:qikairo7/dsh-gemini-pool
-```
-
-**2. 登录 Google 账号**
-
-打开 DSH 设置 → **Antigravity** → 点击「＋ 添加 Google 账号」完成授权。账号数量不限。
-
-**3. 完成**
-
-模型选择器里勾选要用的模型，开始对话。额度刷新、账号调度全部自动。
-
-用的模型看不了图？也能贴图。图片会由池内 Gemini 自动转述给当前模型（默认开启，见「👁 无视觉主模型的看图旁路」）。
-
-<details>
-<summary><kbd>离线安装 / 手动安装</kbd></summary>
-
-```bash
-npm run pack:dist
-# 包名带 package.json 里的当前版本号，按 dist/ 下实际生成的文件名安装
-dsh plugin --profile web add ./dist/dsh-gemini-pool-*.tgz
-```
-
-若 DSH 版本不支持 `dsh plugin add`，手动复制包到 `$DSH_HOME/profiles/web/node_modules/`，并在 `cordis.patch.yml` 中添加：
-
-```yaml
-- insert:
-    - id: dsh-gemini-pool
-      name: dsh-gemini-pool
-```
-
-</details>
-
-## 🧱 网络环境（需要代理时）
-
-插件自身不含任何代理代码：所有 Google 请求都是进程内 `fetch`，用宿主装好的全局 HTTP 通路。宿主**只在启动时**从 harness home 的 `.env` 读取 `HTTP_PROXY` / `HTTPS_PROXY` / `ALL_PROXY` / `NO_PROXY`（这几个名字写在其它任何位置的 `.env` 里会被宿主直接拒绝），并据此为插件装好代理。
-
-> ⚠️ 「浏览器授权成功，但 DSH 里始终没有账号 / 刷新数据报无法获取」最常见的原因就是：代理文件放错了 home。
-
-| 你用的是 | 代理文件写在这里 |
-| --- | --- |
-| CLI（`dsh ...`） | `~/.dsh/.env` |
-| **DSH Desktop** | Windows：`%APPDATA%\dsh-desktop\harness\.env`<br>macOS：`~/Library/Application Support/dsh-desktop/harness/.env` |
-
-**桌面版有自己的 harness home，不是 `~/.dsh`**；只放 `~/.dsh/.env` 在桌面版上不会生效。（顺带：桌面版的 `$DSH_HOME` 就是上表那一格，账号文件在 `<该目录>\storages\antigravity-pool-accounts.json`。）
-
-内容三行即可，端口按自己的代理改：
-
-```bash
-HTTP_PROXY=http://127.0.0.1:7897
-HTTPS_PROXY=http://127.0.0.1:7897
-```
-
-- **写完后必须完全退出并重启 DSH**：代理只在启动时读一次，刷新页面没用。
-- 回环地址（设置页 GUI、OAuth 回调用的本地端口）由宿主自动绕过，不需要写 `NO_PROXY`。
-- 自检：登录或额度刷新失败时，如果报错里是 `UND_ERR_CONNECT_TIMEOUT` 或 `fetch failed`，基本可以断定这条路没走代理。把 `https://oauth2.googleapis.com/token` 直连与走代理各请求一次即可确认（走通会返回 `400`，因为没带请求体）。
-- 不需要、也不建议给插件加代理代码：宿主 Node 里 `import('undici')` 不可用，而进程内 `fetch` 会自动跟随宿主装的代理。
-
-## 💧 账号池与调度
-
-三种调度策略，设置页一键切换：
-
-- **智能均衡（推荐）** — 自动挑选剩余额度最健康的账号
-- **主备切换** — 固定主账号，额度耗尽自动切备用
-- **手动指定** — 锁定单一账号，用于调试或专跑
-
-日常操作走对话命令：
-
-| 命令 | 作用 |
+| 项 | 说明 |
 |---|---|
-| `/antigravity-login` | 登录 Google 账号 |
-| `/antigravity-quota` | 查询各账号额度 |
-| `/antigravity-doctor` | 自检诊断（视觉旁路排障见下文） |
-| `/antigravity-logout` | 登出并移除账号凭证 |
+| User-Agent | `antigravity/cli/1.5.1 (aidev_client; os_type=…; arch=…; cl=…; auth_method=consumer)` |
+| 出站节奏 | 全局 1 req/s、严格串行，不再并行打双端点 |
+| 端点 | 只打 `daily-cloudcode-pa.googleapis.com`，失败串行回退 |
+| 请求头 | 仅 Authorization / Content-Type / Accept / User-Agent |
+| 生成体 | `userAgent`、`requestId: agent/<cascade>/<ms>/<trajectory>/1`、`labels`（含 `model_enum`）、`sessionId`（int64 派生）、`thinkingConfig.includeThoughts` |
+| 工具声明 | `tools[].parameters` 使用大写 Gemini Schema（与 CLI 同构） |
 
-凭证存储在 `$DSH_HOME/storages/antigravity-pool-accounts.json`（桌面版为 `%APPDATA%\dsh-desktop\harness\storages\...`），包含 access 与 refresh token，请妥善保管。旧版单账号凭证升级时自动迁移，无需重新登录。
+### 修掉的两个坑
 
-## 🧊 冷却与自愈
+- **不再静默降级**：选了 `Gemini 3.8 Flash` 不会偷偷换成 3.7（3.7 是 Enterprise 专属，会 404 并把真实错误藏起来）。出错时消息里带 `model=` / `tried=[id:status]` / 首次失败原文。
+- **前言文本折叠**：Gemini 每步输出 "Let me read the file…" 这类普通正文会把会话正文刷满；现在这类「紧跟工具调用的正文」会按 reasoning 上报，折叠进思考预览。回放给模型的历史**仍是原文**（`ANTIGRAVITY_PREAMBLE_AS_REASONING=0` 可关闭）。
 
-账号遇到 429 后自动进入指数退避冷却。连续失败达到阈值时，插件禁用该账号并转入后台探活。额度恢复后账号自动回归，全程无需人工干预。
+### 其它
 
-| 参数 | 默认值 | 说明 |
+- 多账号池：智能均衡 / 主备切换 / 手动指定三种调度，429 毫秒级切号；
+- 图像生成（`inlineData`）与图像输入（vision bridge）；
+- `claude-*` / `gpt-oss-*` 走各自的旧 schema 分支，不受 Gemini 调整影响。
+
+---
+
+## 安装
+
+插件以 DSH bundle 形式安装：把依赖写进某个 profile 的 `package.json`，并把 `dsh-gemini-pool` 加进 `dsh.profile.bundles`。
+
+### 方式 1：直接装这个仓库
+
+```jsonc
+// ~/.dsh/profiles/<profile>/package.json
+{
+  "dependencies": {
+    "dsh-gemini-pool": "github:CyanAutumn/dsh-gemini-pool"
+  },
+  "dsh": {
+    "profile": {
+      "bundles": ["@deepseek-ai/dsh-base", "@deepseek-ai/dsh-web-app", "dsh-gemini-pool"]
+    }
+  }
+}
+```
+
+```powershell
+cd $env:USERPROFILE\.dsh\profiles\<profile>
+pnpm install
+# 重启 DeepSeek Harness
+```
+
+### 方式 2：本地目录 / tarball（离线）
+
+```jsonc
+"dsh-gemini-pool": "file:C:/path/to/dsh-gemini-pool"
+// 或
+"dsh-gemini-pool": "file:C:/path/to/dsh-gemini-pool-0.8.2-patch.4.tgz"
+```
+
+### 首次使用
+
+1. 设置 → **Antigravity** → 登录（浏览器 OAuth）；
+2. 模型列表 → **Antigravity** 分组 → 选择模型（如 `Gemini 3.8 Flash`、`Gemini 4 Argon`）；
+3. 聊天输入框左下角出现 `AGY xx%` 即额度徽标生效；
+4. 模型/额度不对时，点设置页的「刷新额度与模型列表」。
+
+---
+
+## 环境变量
+
+| 变量 | 默认 | 说明 |
 |---|---|---|
-| `cooldownMs` | 1 分钟 | 首次冷却时长，之后逐次翻倍 |
-| `cooldownMaxMs` | 1 小时 | 冷却时长上限 |
-| `disableThreshold` | 5 次 | 连续失败达到即禁用该账号 |
-| `probeIntervalMs` | 5 分钟 | 后台探活间隔，恢复即自动启用 |
+| `ANTIGRAVITY_USER_AGENT` | 官方 CLI UA | 覆盖请求 UA（不建议改） |
+| `ANTIGRAVITY_CLI_VERSION` | `1.5.1` | UA 中的 CLI 版本 |
+| `ANTIGRAVITY_CLI_BUILD` | `1014269460` | UA 中的 `cl=` 构建号 |
+| `ANTIGRAVITY_BASE_URL` | `https://cloudcode-pa.googleapis.com` | 备用端点 |
+| `ANTIGRAVITY_PROJECT_ID` | 跟随 `loadCodeAssist` | 指定 GCP 项目 |
+| `ANTIGRAVITY_PREAMBLE_AS_REASONING` | `1` | 工具调用前的正文是否按 reasoning 上报；`0` 关闭 |
+| `ANTIGRAVITY_RUNTIME_MODEL` | 自动 | 强制某个 runtime 模型（调试用） |
+| `ANTIGRAVITY_VISION_ENABLED` | 自动 | 关闭图像输入桥 |
 
-被禁用的账号在设置页显示红色标签，可点「重新启用」一键恢复。以上参数均可在设置页「冷却与恢复」折叠区调整。
+---
 
-## 👁 无视觉主模型的看图旁路
+## 与上游差异
 
-主模型不支持看图时（如纯文本模型），贴图由池内 Gemini 代看后以文字回喂，分两条路：
+完整列表见 [LOCAL-PATCH.md](LOCAL-PATCH.md)，逆向与验证材料见：
 
-- **自动转述（主路径，无感）**：贴图后，插件把发往模型的请求里的图片替换为池内 Gemini 的文字转述。主模型直接读到文字描述，无需任何操作。同一张图只转述一次（进程内缓存）；会话历史里反复出现的图不重复消耗额度。转述附带原始图片哈希。转述失败时自动退回宿主占位路径，不阻塞对话。
-- **`antigravity_read_image` 工具（备用路径）**：想对某张图细看时，主模型可显式调用（参数为转述文本里的哈希前缀，也接受工作区内本地路径 / data: URL / http(s) 公网图片链接），实时重新转述。
+- [docs/REVERSE-AGY.md](docs/REVERSE-AGY.md) —— 对 Antigravity CLI / 桌面版的行为逆向
+- [docs/GENERATE-BODY-DIFF.md](docs/GENERATE-BODY-DIFF.md) —— 生成请求体逐字段对照
+- [docs/RISK-AND-PARITY.md](docs/RISK-AND-PARITY.md) —— 请求画像与风控考量
 
-- **数据流向**：图片会经池内 Google 账号处理，与对话 / 生图同池同额度。
-- **默认开启**。关闭方式任选其一：
-  - 设置环境变量 `ANTIGRAVITY_VISION_ENABLED=false`
-  - 在设置页「视觉旁路」卡片一键关闭
-  - 经 `/antigravity/api/config` 在 accounts.json 里配置 `visionEnabled: false`
-
-  开关同时控制贴图准入与自动转述；关闭后，贴图行为恢复宿主原样。`visionModel` 指定代看模型；留空则自动挑选，设置页卡片可直接选择。
-- **已知依赖**：自动转述依赖宿主 `llm/stream` 事件、贴图准入依赖 `resolveModelInfo` 行为，宿主大版本升级后若贴图行为异常，需重审本节（当前在 DSH 0.2.0-rc.2 验证）。
-- **排障**：贴图后模型仍收到占位文本时，先运行 `/antigravity-doctor`，查看 `visionBridge` / `visionShim` 两行。两行显示 `registered` + `installed` 即为正常。服务端日志里，`[Antigravity Pool Vision]` 前缀的行记录桥的每一步判定（请求进入、模型判定、改写结果或放行原因）。贴图后一条前缀行都没有，说明事件没有到达桥。
-
-## 🤖 模型一览
-
-设置页勾选即用，已勾选的模型自动置顶，每个模型实时显示池内最高可用额度。
-
-<p align="center">
-  <img src="./assets/images/screenshots/settings-2.png" alt="调度策略与模型选择器" width="45%">
-  <img src="./assets/images/screenshots/settings-3.png" alt="默认生图配置" width="45%">
-</p>
-
-| 模型 | 额度池 |
-|---|---|
-| Gemini 3.8 / 3.7 / 3.6 / 3.5 Flash | Gemini |
-| Gemini 3.1 Pro · Gemini 3.1 Flash Image（生图） | Gemini |
-| Gemini 3 Flash · Gemini 2.5 Pro / Flash | Gemini |
-| Claude Opus 4.6 · Claude Sonnet 4.6 · GPT-OSS 120B | Claude & GPT |
-
-同一额度池内共享每周与 5 小时额度；额度按 token 成本比例消耗，越重的模型消耗越快。
-
-## 🧭 架构
-
-```mermaid
-flowchart LR
-  subgraph HOST["DSH 宿主"]
-    LLM["llm/stream 请求流"]
-    SEL["模型选择器 / 设置页"]
-  end
-  subgraph PLUGIN["dsh-gemini-pool"]
-    CORE["插件主体<br/>命令与 API 路由"]
-    POOL["账号池管理<br/>调度 · 冷却 · 探活"]
-    VB["视觉旁路桥<br/>图片转文字"]
-    TOOLS["工具集<br/>read_image · image_generate"]
-  end
-  STORE[("凭证存储<br/>antigravity-pool-accounts.json")]
-  GOOGLE["Google Antigravity API"]
-
-  SEL --> CORE
-  LLM --> VB --> POOL
-  CORE --> POOL
-  TOOLS --> GOOGLE
-  POOL --> GOOGLE
-  POOL --> STORE
-```
-
-请求经宿主进入插件：视觉旁路桥改写无视觉模型的图片请求，账号池按调度策略选号并处理 429 冷却与探活，全部调用进程内直达 Google 官方端点。
-
-<p align="center">
-  <img src="./assets/images/panel.gif" alt="请求流动态演示（动画数字为示意）" width="72%">
-</p>
-
-## 🤝 贡献
-
-欢迎 [Issue](https://github.com/qikairo7/dsh-gemini-pool/issues) 与 [PR](https://github.com/qikairo7/dsh-gemini-pool/pulls)，用法与想法也可以到 [讨论区](https://github.com/qikairo7/dsh-gemini-pool/discussions) 交流。提交前请先跑通本地检查：
+## 自检
 
 ```bash
-npm install    # 安装依赖
-npm run check  # 语法检查 + 测试
+node test/catalog-test.mjs        # 实时目录 → 可选模型 的合并逻辑
+node test/tool-schema-test.mjs    # JSON Schema → Gemini Schema（CLI 同构）
+node test/preamble-test.mjs       # 前言文本归类
+node test/usage-pill-test.mjs     # 额度徽标注册与渲染
 ```
 
-## 📄 许可证与致谢
+## 已知限制
 
-本项目基于 [MIT License](./LICENSE) 授权。
+- 依赖“官方客户端身份”这一事实；Google 调整策略时可能失效，届时需要重新逆向；
+- 模型目录与额度完全以端点返回为准；
+- 需要 Cloud Code Assist 可用账号（Google AI Pro 等）；
+- 仅覆盖 Gemini / Claude / GPT-OSS 三类模型，`chat_*`、`tab_*` 等服务型模型不会出现在列表中。
 
-基于 [@LiZhenNet](https://github.com/LiZhenNet) 的 [dsh-antigravity](https://github.com/LiZhenNet/dsh-antigravity) 构建，感谢 [@Lukeknow0](https://github.com/Lukeknow0)、[@miuzel](https://github.com/miuzel)、[@grloper](https://github.com/grloper)、[@sereineele](https://github.com/sereineele) 的社区贡献。
+## 许可
+
+MIT，见 [LICENSE](LICENSE)。上游版权归 [qikairo7](https://github.com/qikairo7/dsh-gemini-pool) 所有，本 fork 的修改遵循同一许可。
+
+---
+
+## English
+
+A DeepSeek Harness provider plugin for Antigravity (Google Cloud Code Assist): OAuth login, account pool, **live model catalog** (including Gemini 4 Argon, Claude Opus 5.5), and an `AGY %` quota pill next to the composer model picker.
+
+Forked from [qikairo7/dsh-gemini-pool](https://github.com/qikairo7/dsh-gemini-pool) `0.8.2`, with request parity to the official Antigravity CLI, a live catalog instead of a hardcoded list, no silent model downgrade, and preamble text folded into reasoning.
+
+Install: add `"dsh-gemini-pool": "github:CyanAutumn/dsh-gemini-pool"` to a profile's dependencies and `"dsh-gemini-pool"` to `dsh.profile.bundles`, then `pnpm install` and restart. See the screenshots above and `LOCAL-PATCH.md` for the change list.

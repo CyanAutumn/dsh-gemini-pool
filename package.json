@@ -1,6 +1,6 @@
 {
   "name": "dsh-gemini-pool",
-  "version": "0.8.2",
+  "version": "0.8.2-patch.4",
   "description": "Multi-account Google Gemini / Antigravity provider for DeepSeek Harness",
   "type": "module",
   "main": "lib/index.js",
@@ -17,7 +17,8 @@
     "client": {
       "inject": [
         "@deepseek-ai/dsh-client-ui-settings",
-        "@deepseek-ai/dsh-client-locale"
+        "@deepseek-ai/dsh-client-locale",
+        "@deepseek-ai/dsh-client-ui-model-selection"
       ],
       "platform": "web"
     }

@@ -8,3 +8,8 @@ build/
 *.log
 .DS_Store
 *.tgz
+
+node_modules/
+*.bak
+*.bak-*
+Thumbs.db

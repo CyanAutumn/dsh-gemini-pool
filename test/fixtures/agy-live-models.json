@@ -1,0 +1,1138 @@
+{
+  "models": {
+    "gemini-3.1-flash-lite": {
+      "displayName": "Gemini 3.1 Flash Lite",
+      "supportsImages": true,
+      "supportsThinking": true,
+      "minThinkingBudget": 128,
+      "recommended": true,
+      "maxTokens": 1048576,
+      "maxOutputTokens": 65535,
+      "quotaInfo": {
+        "remainingFraction": 1,
+        "resetTime": "1970-01-01T00:00:00Z"
+      },
+      "model": "MODEL_PLACEHOLDER_M50",
+      "apiProvider": "API_PROVIDER_GOOGLE_GEMINI",
+      "modelProvider": "MODEL_PROVIDER_GOOGLE",
+      "supportsVideo": true,
+      "supportedMimeTypes": {
+        "audio/webm;codecs=opus": true,
+        "application/pdf": true,
+        "application/x-ipynb+json": true,
+        "video/videoframe/jpeg2000": true,
+        "image/heif": true,
+        "application/vnd.ms-powerpoint": true,
+        "audio/webm": true,
+        "video/jpeg2000": true,
+        "text/javascript": true,
+        "application/rtf": true,
+        "application/vnd.openxmlformats-officedocument.presentationml.presentation": true,
+        "application/msword": true,
+        "image/webp": true,
+        "video/mp4": true,
+        "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet": true,
+        "image/heic": true,
+        "audio/m4a": true,
+        "audio/x-wav": true,
+        "application/x-javascript": true,
+        "application/x-python-code": true,
+        "audio/flac": true,
+        "audio/opus": true,
+        "audio/wav": true,
+        "video/text/timestamp": true,
+        "text/markdown": true,
+        "application/x-typescript": true,
+        "audio/l16": true,
+        "text/css": true,
+        "text/rtf": true,
+        "audio/vnd.wave": true,
+        "text/csv": true,
+        "audio/ogg": true,
+        "audio/mp4": true,
+        "audio/mpeg": true,
+        "audio/aac": true,
+        "audio/mp3": true,
+        "text/xml": true,
+        "image/png": true,
+        "video/audio/wav": true,
+        "text/x-python-script": true,
+        "text/html": true,
+        "video/webm": true,
+        "text/x-typescript": true,
+        "application/vnd.ms-excel": true,
+        "text/x-python": true,
+        "application/json": true,
+        "image/jpeg": true,
+        "text/plain": true,
+        "video/audio/s16le": true,
+        "audio/wave": true,
+        "application/vnd.openxmlformats-officedocument.wordprocessingml.document": true
+      },
+      "thinkingLevel": 1,
+      "modelExperiments": {
+        "experiments": {
+          "CASCADE_USE_EXPERIMENT_CHECKPOINTER": {
+            "stringValue": "{\n    \"strategy\": \"CHECKPOINT_STRATEGY_SINGLE_PROMPT\",\n    \"max_token_limit\": \"128000\",\n    \"token_threshold\": \"50000\",\n    \"max_overhead_ratio\": \"0.15\",\n    \"enabled\": true,\n    \"max_output_tokens\": \"16384\",\n    \"checkpoint_model\": \"MODEL_PLACEHOLDER_M50\",\n    \"use_last_planner_model\": false,\n    \"is_sync\": false,\n    \"max_user_requests\": 10,\n    \"include_last_user_message\": false,\n    \"include_conversation_log\": true,\n    \"include_running_task_snapshots\": true,\n    \"include_subagent_snapshots\": true,\n    \"include_artifact_snapshots\": true,\n    \"retry_config\": {\n        \"max_retries\": 0,\n        \"initial_sleep_duration_ms\": 1000,\n        \"exponential_multiplier\": 2,\n        \"include_error_feedback\": false\n    },\n    \"session_summary_prompt_override\": \"\",\n    \"use_model_reported_token_count\": true\n}"
+          },
+          "retry_model_capacity_exhausted": {
+            "boolValue": true
+          }
+        }
+      }
+    },
+    "gemini-3.1-flash-image": {
+      "displayName": "Gemini 3.1 Flash Image",
+      "supportsImages": true,
+      "maxTokens": 65536,
+      "maxOutputTokens": 65536,
+      "quotaInfo": {
+        "remainingFraction": 1,
+        "resetTime": "1970-01-01T00:00:00Z"
+      },
+      "model": "MODEL_PLACEHOLDER_M21",
+      "apiProvider": "API_PROVIDER_GOOGLE_GEMINI",
+      "modelProvider": "MODEL_PROVIDER_GOOGLE",
+      "supportedMimeTypes": {
+        "application/json": true,
+        "image/jpeg": true,
+        "video/videoframe/jpeg2000": true,
+        "application/x-javascript": true,
+        "image/heic": true,
+        "text/html": true,
+        "application/x-typescript": true,
+        "text/x-typescript": true,
+        "text/plain": true,
+        "text/csv": true,
+        "application/x-python-code": true,
+        "text/javascript": true,
+        "text/x-python-script": true,
+        "application/x-ipynb+json": true,
+        "text/xml": true,
+        "video/text/timestamp": true,
+        "text/css": true,
+        "image/webp": true,
+        "application/rtf": true,
+        "text/markdown": true,
+        "image/heif": true,
+        "text/rtf": true,
+        "text/x-python": true,
+        "video/jpeg2000": true,
+        "image/png": true
+      }
+    },
+    "claude-sonnet-5-5-low": {
+      "displayName": "Claude Sonnet 5.5 (Low)",
+      "supportsImages": true,
+      "supportsThinking": true,
+      "recommended": true,
+      "maxTokens": 1000000,
+      "maxOutputTokens": 128000,
+      "quotaInfo": {
+        "remainingFraction": 1,
+        "resetTime": "1970-01-01T00:00:00Z"
+      },
+      "model": "MODEL_PLACEHOLDER_M403",
+      "apiProvider": "API_PROVIDER_ANTHROPIC_VERTEX",
+      "modelProvider": "MODEL_PROVIDER_ANTHROPIC",
+      "tagTitle": "New",
+      "supportedMimeTypes": {
+        "image/png": true,
+        "image/webp": true,
+        "video/jpeg2000": true,
+        "video/videoframe/jpeg2000": true,
+        "image/heic": true,
+        "image/heif": true,
+        "image/jpeg": true
+      },
+      "thinkingLevel": 1,
+      "modelExperiments": {
+        "experiments": {
+          "retry_model_capacity_exhausted": {
+            "boolValue": true
+          },
+          "CASCADE_USE_EXPERIMENT_CHECKPOINTER": {
+            "stringValue": "{\n    \"strategy\": \"CHECKPOINT_STRATEGY_SAME_MODEL\",\n    \"max_token_limit\": \"256000\",\n    \"token_threshold\": \"50000\",\n    \"max_overhead_ratio\": \"0.15\",\n    \"enabled\": true,\n    \"max_output_tokens\": \"16384\",\n    \"checkpoint_model\": \"MODEL_PLACEHOLDER_M50\",\n    \"use_last_planner_model\": true,\n    \"is_sync\": true,\n    \"max_user_requests\": 10,\n    \"include_last_user_message\": true,\n    \"include_conversation_log\": false,\n    \"include_running_task_snapshots\": true,\n    \"include_subagent_snapshots\": true,\n    \"include_artifact_snapshots\": true,\n    \"retry_config\": {\n        \"max_retries\": 4,\n        \"initial_sleep_duration_ms\": 1000,\n        \"exponential_multiplier\": 2,\n        \"include_error_feedback\": false\n    },\n    \"session_summary_prompt_override\": \"\",\n    \"use_model_reported_token_count\": true\n}"
+          },
+          "CASCADE_USE_EXPERIMENT_CHECKPOINTER/claude-1m_840k": {
+            "stringValue": "{\n    \"strategy\": \"CHECKPOINT_STRATEGY_SAME_MODEL\",\n    \"max_token_limit\": \"840000\",\n    \"token_threshold\": \"50000\",\n    \"max_overhead_ratio\": \"0.15\",\n    \"enabled\": true,\n    \"max_output_tokens\": \"16384\",\n    \"checkpoint_model\": \"MODEL_PLACEHOLDER_M50\",\n    \"use_last_planner_model\": true,\n    \"is_sync\": true,\n    \"max_user_requests\": 10,\n    \"include_last_user_message\": true,\n    \"include_conversation_log\": false,\n    \"include_running_task_snapshots\": true,\n    \"include_subagent_snapshots\": true,\n    \"include_artifact_snapshots\": true,\n    \"retry_config\": {\n        \"max_retries\": 4,\n        \"initial_sleep_duration_ms\": 1000,\n        \"exponential_multiplier\": 2,\n        \"include_error_feedback\": false\n    },\n    \"session_summary_prompt_override\": \"\",\n    \"use_model_reported_token_count\": true\n}"
+          }
+        }
+      },
+      "vertexModelId": "claude-sonnet-5-5@default",
+      "supportsAdaptiveThinking": true
+    },
+    "claude-opus-5-5-high": {
+      "displayName": "Claude Opus 5.5 (High)",
+      "supportsImages": true,
+      "supportsThinking": true,
+      "recommended": true,
+      "maxTokens": 1000000,
+      "maxOutputTokens": 128000,
+      "quotaInfo": {
+        "remainingFraction": 1,
+        "resetTime": "1970-01-01T00:00:00Z"
+      },
+      "model": "MODEL_PLACEHOLDER_M402",
+      "apiProvider": "API_PROVIDER_ANTHROPIC_VERTEX",
+      "modelProvider": "MODEL_PROVIDER_ANTHROPIC",
+      "tagTitle": "New",
+      "supportedMimeTypes": {
+        "image/heic": true,
+        "image/heif": true,
+        "image/jpeg": true,
+        "image/png": true,
+        "image/webp": true,
+        "video/jpeg2000": true,
+        "video/videoframe/jpeg2000": true
+      },
+      "thinkingLevel": 3,
+      "modelExperiments": {
+        "experiments": {
+          "CASCADE_USE_EXPERIMENT_CHECKPOINTER/claude-1m_840k": {
+            "stringValue": "{\n    \"strategy\": \"CHECKPOINT_STRATEGY_SAME_MODEL\",\n    \"max_token_limit\": \"840000\",\n    \"token_threshold\": \"50000\",\n    \"max_overhead_ratio\": \"0.15\",\n    \"enabled\": true,\n    \"max_output_tokens\": \"16384\",\n    \"checkpoint_model\": \"MODEL_PLACEHOLDER_M50\",\n    \"use_last_planner_model\": true,\n    \"is_sync\": true,\n    \"max_user_requests\": 10,\n    \"include_last_user_message\": true,\n    \"include_conversation_log\": false,\n    \"include_running_task_snapshots\": true,\n    \"include_subagent_snapshots\": true,\n    \"include_artifact_snapshots\": true,\n    \"retry_config\": {\n        \"max_retries\": 4,\n        \"initial_sleep_duration_ms\": 1000,\n        \"exponential_multiplier\": 2,\n        \"include_error_feedback\": false\n    },\n    \"session_summary_prompt_override\": \"\",\n    \"use_model_reported_token_count\": true\n}"
+          },
+          "retry_model_capacity_exhausted": {
+            "boolValue": true
+          },
+          "CASCADE_USE_EXPERIMENT_CHECKPOINTER": {
+            "stringValue": "{\n    \"strategy\": \"CHECKPOINT_STRATEGY_SAME_MODEL\",\n    \"max_token_limit\": \"256000\",\n    \"token_threshold\": \"50000\",\n    \"max_overhead_ratio\": \"0.15\",\n    \"enabled\": true,\n    \"max_output_tokens\": \"16384\",\n    \"checkpoint_model\": \"MODEL_PLACEHOLDER_M50\",\n    \"use_last_planner_model\": true,\n    \"is_sync\": true,\n    \"max_user_requests\": 10,\n    \"include_last_user_message\": true,\n    \"include_conversation_log\": false,\n    \"include_running_task_snapshots\": true,\n    \"include_subagent_snapshots\": true,\n    \"include_artifact_snapshots\": true,\n    \"retry_config\": {\n        \"max_retries\": 4,\n        \"initial_sleep_duration_ms\": 1000,\n        \"exponential_multiplier\": 2,\n        \"include_error_feedback\": false\n    },\n    \"session_summary_prompt_override\": \"\",\n    \"use_model_reported_token_count\": true\n}"
+          }
+        }
+      },
+      "vertexModelId": "claude-opus-5-5@default",
+      "supportsAdaptiveThinking": true
+    },
+    "claude-sonnet-5-5-high": {
+      "displayName": "Claude Sonnet 5.5 (High)",
+      "supportsImages": true,
+      "supportsThinking": true,
+      "recommended": true,
+      "maxTokens": 1000000,
+      "maxOutputTokens": 128000,
+      "quotaInfo": {
+        "remainingFraction": 1,
+        "resetTime": "1970-01-01T00:00:00Z"
+      },
+      "model": "MODEL_PLACEHOLDER_M405",
+      "apiProvider": "API_PROVIDER_ANTHROPIC_VERTEX",
+      "modelProvider": "MODEL_PROVIDER_ANTHROPIC",
+      "tagTitle": "New",
+      "supportedMimeTypes": {
+        "image/webp": true,
+        "video/jpeg2000": true,
+        "video/videoframe/jpeg2000": true,
+        "image/heic": true,
+        "image/heif": true,
+        "image/jpeg": true,
+        "image/png": true
+      },
+      "thinkingLevel": 3,
+      "modelExperiments": {
+        "experiments": {
+          "retry_model_capacity_exhausted": {
+            "boolValue": true
+          },
+          "CASCADE_USE_EXPERIMENT_CHECKPOINTER": {
+            "stringValue": "{\n    \"strategy\": \"CHECKPOINT_STRATEGY_SAME_MODEL\",\n    \"max_token_limit\": \"256000\",\n    \"token_threshold\": \"50000\",\n    \"max_overhead_ratio\": \"0.15\",\n    \"enabled\": true,\n    \"max_output_tokens\": \"16384\",\n    \"checkpoint_model\": \"MODEL_PLACEHOLDER_M50\",\n    \"use_last_planner_model\": true,\n    \"is_sync\": true,\n    \"max_user_requests\": 10,\n    \"include_last_user_message\": true,\n    \"include_conversation_log\": false,\n    \"include_running_task_snapshots\": true,\n    \"include_subagent_snapshots\": true,\n    \"include_artifact_snapshots\": true,\n    \"retry_config\": {\n        \"max_retries\": 4,\n        \"initial_sleep_duration_ms\": 1000,\n        \"exponential_multiplier\": 2,\n        \"include_error_feedback\": false\n    },\n    \"session_summary_prompt_override\": \"\",\n    \"use_model_reported_token_count\": true\n}"
+          },
+          "CASCADE_USE_EXPERIMENT_CHECKPOINTER/claude-1m_840k": {
+            "stringValue": "{\n    \"strategy\": \"CHECKPOINT_STRATEGY_SAME_MODEL\",\n    \"max_token_limit\": \"840000\",\n    \"token_threshold\": \"50000\",\n    \"max_overhead_ratio\": \"0.15\",\n    \"enabled\": true,\n    \"max_output_tokens\": \"16384\",\n    \"checkpoint_model\": \"MODEL_PLACEHOLDER_M50\",\n    \"use_last_planner_model\": true,\n    \"is_sync\": true,\n    \"max_user_requests\": 10,\n    \"include_last_user_message\": true,\n    \"include_conversation_log\": false,\n    \"include_running_task_snapshots\": true,\n    \"include_subagent_snapshots\": true,\n    \"include_artifact_snapshots\": true,\n    \"retry_config\": {\n        \"max_retries\": 4,\n        \"initial_sleep_duration_ms\": 1000,\n        \"exponential_multiplier\": 2,\n        \"include_error_feedback\": false\n    },\n    \"session_summary_prompt_override\": \"\",\n    \"use_model_reported_token_count\": true\n}"
+          }
+        }
+      },
+      "vertexModelId": "claude-sonnet-5-5@default",
+      "supportsAdaptiveThinking": true
+    },
+    "gemini-2.5-flash-thinking": {
+      "displayName": "Gemini 3.5 Flash Lite",
+      "supportsImages": true,
+      "supportsThinking": true,
+      "minThinkingBudget": 128,
+      "recommended": true,
+      "maxTokens": 1048576,
+      "maxOutputTokens": 65535,
+      "quotaInfo": {
+        "remainingFraction": 1,
+        "resetTime": "1970-01-01T00:00:00Z"
+      },
+      "model": "MODEL_GOOGLE_GEMINI_2_5_FLASH_THINKING",
+      "apiProvider": "API_PROVIDER_GOOGLE_GEMINI",
+      "modelProvider": "MODEL_PROVIDER_GOOGLE",
+      "supportsVideo": true,
+      "supportedMimeTypes": {
+        "audio/m4a": true,
+        "text/x-python-script": true,
+        "video/text/timestamp": true,
+        "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet": true,
+        "application/vnd.openxmlformats-officedocument.presentationml.presentation": true,
+        "video/audio/s16le": true,
+        "video/audio/wav": true,
+        "application/x-ipynb+json": true,
+        "application/x-javascript": true,
+        "audio/webm;codecs=opus": true,
+        "audio/wav": true,
+        "audio/wave": true,
+        "video/jpeg2000": true,
+        "text/css": true,
+        "audio/ogg": true,
+        "text/javascript": true,
+        "image/png": true,
+        "text/markdown": true,
+        "text/csv": true,
+        "text/plain": true,
+        "audio/x-wav": true,
+        "application/msword": true,
+        "application/x-typescript": true,
+        "application/json": true,
+        "application/vnd.ms-excel": true,
+        "video/webm": true,
+        "audio/aac": true,
+        "application/x-python-code": true,
+        "audio/mp4": true,
+        "audio/flac": true,
+        "application/vnd.openxmlformats-officedocument.wordprocessingml.document": true,
+        "text/html": true,
+        "video/videoframe/jpeg2000": true,
+        "text/xml": true,
+        "application/rtf": true,
+        "image/heif": true,
+        "audio/opus": true,
+        "image/webp": true,
+        "text/rtf": true,
+        "audio/mpeg": true,
+        "application/vnd.ms-powerpoint": true,
+        "audio/webm": true,
+        "audio/mp3": true,
+        "text/x-typescript": true,
+        "audio/vnd.wave": true,
+        "text/x-python": true,
+        "application/pdf": true,
+        "image/jpeg": true,
+        "audio/l16": true,
+        "image/heic": true,
+        "video/mp4": true
+      },
+      "thinkingLevel": 1,
+      "modelExperiments": {
+        "experiments": {
+          "CASCADE_USE_EXPERIMENT_CHECKPOINTER": {
+            "stringValue": "{\n    \"strategy\": \"CHECKPOINT_STRATEGY_SINGLE_PROMPT\",\n    \"max_token_limit\": \"128000\",\n    \"token_threshold\": \"50000\",\n    \"max_overhead_ratio\": \"0.15\",\n    \"enabled\": true,\n    \"max_output_tokens\": \"16384\",\n    \"checkpoint_model\": \"MODEL_PLACEHOLDER_M50\",\n    \"use_last_planner_model\": false,\n    \"is_sync\": false,\n    \"max_user_requests\": 10,\n    \"include_last_user_message\": false,\n    \"include_conversation_log\": true,\n    \"include_running_task_snapshots\": true,\n    \"include_subagent_snapshots\": true,\n    \"include_artifact_snapshots\": true,\n    \"retry_config\": {\n        \"max_retries\": 0,\n        \"initial_sleep_duration_ms\": 1000,\n        \"exponential_multiplier\": 2,\n        \"include_error_feedback\": false\n    },\n    \"session_summary_prompt_override\": \"\",\n    \"use_model_reported_token_count\": true\n}"
+          },
+          "retry_model_capacity_exhausted": {
+            "boolValue": true
+          }
+        }
+      }
+    },
+    "chat_23310": {
+      "maxTokens": 32768,
+      "quotaInfo": {
+        "remainingFraction": 1
+      },
+      "model": "MODEL_CHAT_23310",
+      "apiProvider": "API_PROVIDER_INTERNAL",
+      "modelProvider": "MODEL_PROVIDER_GOOGLE",
+      "supportsCumulativeContext": true,
+      "supportsEstimateTokenCounter": true,
+      "isInternal": true,
+      "promptTemplaterType": "PROMPT_TEMPLATER_TYPE_CHATML",
+      "toolFormatterType": "TOOL_FORMATTER_TYPE_XML",
+      "requiresLeadInGeneration": true
+    },
+    "tab_jump_flash_lite_preview": {
+      "maxTokens": 16384,
+      "maxOutputTokens": 4096,
+      "quotaInfo": {
+        "remainingFraction": 1
+      },
+      "model": "MODEL_PLACEHOLDER_M28",
+      "apiProvider": "API_PROVIDER_GOOGLE_GEMINI",
+      "modelProvider": "MODEL_PROVIDER_GOOGLE",
+      "supportsCumulativeContext": true,
+      "tabJumpPrintLineRange": true,
+      "supportsEstimateTokenCounter": true,
+      "addCursorToFindReplaceTarget": true,
+      "toolFormatterType": "TOOL_FORMATTER_TYPE_XML",
+      "requiresLeadInGeneration": true,
+      "requiresNoXmlToolExamples": true
+    },
+    "gemini-3-flash": {
+      "displayName": "Gemini 3 Flash",
+      "supportsImages": true,
+      "supportsThinking": true,
+      "minThinkingBudget": 128,
+      "recommended": true,
+      "maxTokens": 1048576,
+      "maxOutputTokens": 65536,
+      "quotaInfo": {
+        "remainingFraction": 1,
+        "resetTime": "1970-01-01T00:00:00Z"
+      },
+      "model": "MODEL_PLACEHOLDER_M18",
+      "apiProvider": "API_PROVIDER_GOOGLE_GEMINI",
+      "modelProvider": "MODEL_PROVIDER_GOOGLE",
+      "supportsVideo": true,
+      "supportedMimeTypes": {
+        "application/x-typescript": true,
+        "image/jpeg": true,
+        "video/mp4": true,
+        "audio/webm;codecs=opus": true,
+        "application/vnd.openxmlformats-officedocument.presentationml.presentation": true,
+        "audio/wave": true,
+        "image/heic": true,
+        "video/audio/s16le": true,
+        "application/vnd.openxmlformats-officedocument.wordprocessingml.document": true,
+        "audio/ogg": true,
+        "image/heif": true,
+        "video/text/timestamp": true,
+        "text/x-python": true,
+        "text/xml": true,
+        "text/markdown": true,
+        "audio/flac": true,
+        "text/rtf": true,
+        "video/videoframe/jpeg2000": true,
+        "audio/x-wav": true,
+        "text/x-typescript": true,
+        "audio/opus": true,
+        "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet": true,
+        "text/html": true,
+        "application/vnd.ms-excel": true,
+        "text/javascript": true,
+        "application/vnd.ms-powerpoint": true,
+        "image/webp": true,
+        "audio/wav": true,
+        "text/css": true,
+        "text/x-python-script": true,
+        "application/msword": true,
+        "video/webm": true,
+        "video/jpeg2000": true,
+        "video/audio/wav": true,
+        "audio/l16": true,
+        "image/png": true,
+        "text/csv": true,
+        "text/plain": true,
+        "audio/webm": true,
+        "application/rtf": true,
+        "application/x-javascript": true,
+        "audio/mpeg": true,
+        "audio/aac": true,
+        "application/x-ipynb+json": true,
+        "application/pdf": true,
+        "application/json": true,
+        "audio/m4a": true,
+        "application/x-python-code": true,
+        "audio/mp4": true,
+        "audio/mp3": true,
+        "audio/vnd.wave": true
+      },
+      "thinkingLevel": 3,
+      "modelExperiments": {
+        "experiments": {
+          "CASCADE_USE_EXPERIMENT_CHECKPOINTER": {
+            "stringValue": "{\n    \"strategy\": \"CHECKPOINT_STRATEGY_SINGLE_PROMPT\",\n    \"max_token_limit\": \"128000\",\n    \"token_threshold\": \"50000\",\n    \"max_overhead_ratio\": \"0.15\",\n    \"enabled\": true,\n    \"max_output_tokens\": \"16384\",\n    \"checkpoint_model\": \"MODEL_PLACEHOLDER_M50\",\n    \"use_last_planner_model\": false,\n    \"is_sync\": false,\n    \"max_user_requests\": 10,\n    \"include_last_user_message\": false,\n    \"include_conversation_log\": true,\n    \"include_running_task_snapshots\": true,\n    \"include_subagent_snapshots\": true,\n    \"include_artifact_snapshots\": true,\n    \"retry_config\": {\n        \"max_retries\": 0,\n        \"initial_sleep_duration_ms\": 1000,\n        \"exponential_multiplier\": 2,\n        \"include_error_feedback\": false\n    },\n    \"session_summary_prompt_override\": \"\",\n    \"use_model_reported_token_count\": true\n}"
+          }
+        }
+      }
+    },
+    "claude-opus-5-5-low": {
+      "displayName": "Claude Opus 5.5 (Low)",
+      "supportsImages": true,
+      "supportsThinking": true,
+      "recommended": true,
+      "maxTokens": 1000000,
+      "maxOutputTokens": 128000,
+      "quotaInfo": {
+        "remainingFraction": 1,
+        "resetTime": "1970-01-01T00:00:00Z"
+      },
+      "model": "MODEL_PLACEHOLDER_M400",
+      "apiProvider": "API_PROVIDER_ANTHROPIC_VERTEX",
+      "modelProvider": "MODEL_PROVIDER_ANTHROPIC",
+      "tagTitle": "New",
+      "supportedMimeTypes": {
+        "image/heif": true,
+        "image/jpeg": true,
+        "image/png": true,
+        "image/webp": true,
+        "video/jpeg2000": true,
+        "video/videoframe/jpeg2000": true,
+        "image/heic": true
+      },
+      "thinkingLevel": 1,
+      "modelExperiments": {
+        "experiments": {
+          "CASCADE_USE_EXPERIMENT_CHECKPOINTER": {
+            "stringValue": "{\n    \"strategy\": \"CHECKPOINT_STRATEGY_SAME_MODEL\",\n    \"max_token_limit\": \"256000\",\n    \"token_threshold\": \"50000\",\n    \"max_overhead_ratio\": \"0.15\",\n    \"enabled\": true,\n    \"max_output_tokens\": \"16384\",\n    \"checkpoint_model\": \"MODEL_PLACEHOLDER_M50\",\n    \"use_last_planner_model\": true,\n    \"is_sync\": true,\n    \"max_user_requests\": 10,\n    \"include_last_user_message\": true,\n    \"include_conversation_log\": false,\n    \"include_running_task_snapshots\": true,\n    \"include_subagent_snapshots\": true,\n    \"include_artifact_snapshots\": true,\n    \"retry_config\": {\n        \"max_retries\": 4,\n        \"initial_sleep_duration_ms\": 1000,\n        \"exponential_multiplier\": 2,\n        \"include_error_feedback\": false\n    },\n    \"session_summary_prompt_override\": \"\",\n    \"use_model_reported_token_count\": true\n}"
+          },
+          "CASCADE_USE_EXPERIMENT_CHECKPOINTER/claude-1m_840k": {
+            "stringValue": "{\n    \"strategy\": \"CHECKPOINT_STRATEGY_SAME_MODEL\",\n    \"max_token_limit\": \"840000\",\n    \"token_threshold\": \"50000\",\n    \"max_overhead_ratio\": \"0.15\",\n    \"enabled\": true,\n    \"max_output_tokens\": \"16384\",\n    \"checkpoint_model\": \"MODEL_PLACEHOLDER_M50\",\n    \"use_last_planner_model\": true,\n    \"is_sync\": true,\n    \"max_user_requests\": 10,\n    \"include_last_user_message\": true,\n    \"include_conversation_log\": false,\n    \"include_running_task_snapshots\": true,\n    \"include_subagent_snapshots\": true,\n    \"include_artifact_snapshots\": true,\n    \"retry_config\": {\n        \"max_retries\": 4,\n        \"initial_sleep_duration_ms\": 1000,\n        \"exponential_multiplier\": 2,\n        \"include_error_feedback\": false\n    },\n    \"session_summary_prompt_override\": \"\",\n    \"use_model_reported_token_count\": true\n}"
+          },
+          "retry_model_capacity_exhausted": {
+            "boolValue": true
+          }
+        }
+      },
+      "vertexModelId": "claude-opus-5-5@default",
+      "supportsAdaptiveThinking": true
+    },
+    "gemini-3.5-flash-lite": {
+      "displayName": "Gemini 3.5 Flash Lite",
+      "supportsImages": true,
+      "supportsThinking": true,
+      "minThinkingBudget": 128,
+      "recommended": true,
+      "maxTokens": 1048576,
+      "maxOutputTokens": 65535,
+      "quotaInfo": {
+        "remainingFraction": 1,
+        "resetTime": "1970-01-01T00:00:00Z"
+      },
+      "model": "MODEL_PLACEHOLDER_M198",
+      "apiProvider": "API_PROVIDER_GOOGLE_GEMINI",
+      "modelProvider": "MODEL_PROVIDER_GOOGLE",
+      "supportsVideo": true,
+      "supportedMimeTypes": {
+        "image/png": true,
+        "video/audio/wav": true,
+        "image/heic": true,
+        "image/jpeg": true,
+        "text/csv": true,
+        "audio/webm;codecs=opus": true,
+        "application/vnd.openxmlformats-officedocument.wordprocessingml.document": true,
+        "text/markdown": true,
+        "audio/l16": true,
+        "application/vnd.ms-excel": true,
+        "text/html": true,
+        "text/rtf": true,
+        "application/x-python-code": true,
+        "video/webm": true,
+        "image/webp": true,
+        "video/mp4": true,
+        "audio/aac": true,
+        "text/css": true,
+        "audio/ogg": true,
+        "audio/wave": true,
+        "application/x-javascript": true,
+        "application/vnd.ms-powerpoint": true,
+        "audio/m4a": true,
+        "audio/opus": true,
+        "audio/x-wav": true,
+        "application/vnd.openxmlformats-officedocument.presentationml.presentation": true,
+        "audio/wav": true,
+        "application/pdf": true,
+        "video/text/timestamp": true,
+        "text/xml": true,
+        "audio/vnd.wave": true,
+        "video/jpeg2000": true,
+        "text/x-python-script": true,
+        "audio/webm": true,
+        "audio/mp4": true,
+        "application/json": true,
+        "audio/mpeg": true,
+        "application/x-ipynb+json": true,
+        "text/x-python": true,
+        "application/x-typescript": true,
+        "text/x-typescript": true,
+        "audio/flac": true,
+        "text/plain": true,
+        "application/rtf": true,
+        "image/heif": true,
+        "text/javascript": true,
+        "video/videoframe/jpeg2000": true,
+        "application/msword": true,
+        "video/audio/s16le": true,
+        "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet": true,
+        "audio/mp3": true
+      },
+      "thinkingLevel": 1,
+      "modelExperiments": {
+        "experiments": {
+          "retry_model_capacity_exhausted": {
+            "boolValue": true
+          },
+          "CASCADE_USE_EXPERIMENT_CHECKPOINTER": {
+            "stringValue": "{\n    \"strategy\": \"CHECKPOINT_STRATEGY_SINGLE_PROMPT\",\n    \"max_token_limit\": \"128000\",\n    \"token_threshold\": \"50000\",\n    \"max_overhead_ratio\": \"0.15\",\n    \"enabled\": true,\n    \"max_output_tokens\": \"16384\",\n    \"checkpoint_model\": \"MODEL_PLACEHOLDER_M50\",\n    \"use_last_planner_model\": false,\n    \"is_sync\": false,\n    \"max_user_requests\": 10,\n    \"include_last_user_message\": false,\n    \"include_conversation_log\": true,\n    \"include_running_task_snapshots\": true,\n    \"include_subagent_snapshots\": true,\n    \"include_artifact_snapshots\": true,\n    \"retry_config\": {\n        \"max_retries\": 0,\n        \"initial_sleep_duration_ms\": 1000,\n        \"exponential_multiplier\": 2,\n        \"include_error_feedback\": false\n    },\n    \"session_summary_prompt_override\": \"\",\n    \"use_model_reported_token_count\": true\n}"
+          }
+        }
+      }
+    },
+    "gemini-3.8-flash-tiered": {
+      "supportsImages": true,
+      "supportsThinking": true,
+      "minThinkingBudget": 32,
+      "recommended": true,
+      "maxTokens": 1048576,
+      "maxOutputTokens": 65536,
+      "quotaInfo": {
+        "remainingFraction": 1,
+        "resetTime": "1970-01-01T00:00:00Z"
+      },
+      "model": "MODEL_PLACEHOLDER_M322",
+      "apiProvider": "API_PROVIDER_GOOGLE_GEMINI",
+      "modelProvider": "MODEL_PROVIDER_GOOGLE",
+      "supportsVideo": true,
+      "supportedMimeTypes": {
+        "audio/webm": true,
+        "audio/m4a": true,
+        "image/heic": true,
+        "audio/mp3": true,
+        "text/css": true,
+        "text/xml": true,
+        "application/vnd.openxmlformats-officedocument.presentationml.presentation": true,
+        "video/videoframe/jpeg2000": true,
+        "image/png": true,
+        "audio/webm;codecs=opus": true,
+        "application/msword": true,
+        "application/x-ipynb+json": true,
+        "text/markdown": true,
+        "text/x-typescript": true,
+        "text/x-python-script": true,
+        "video/text/timestamp": true,
+        "image/jpeg": true,
+        "application/vnd.openxmlformats-officedocument.wordprocessingml.document": true,
+        "audio/l16": true,
+        "video/audio/s16le": true,
+        "audio/mpeg": true,
+        "application/vnd.ms-powerpoint": true,
+        "audio/x-wav": true,
+        "application/rtf": true,
+        "text/x-python": true,
+        "video/audio/wav": true,
+        "audio/flac": true,
+        "video/webm": true,
+        "image/webp": true,
+        "image/heif": true,
+        "audio/ogg": true,
+        "video/jpeg2000": true,
+        "application/vnd.ms-excel": true,
+        "audio/mp4": true,
+        "audio/aac": true,
+        "application/x-python-code": true,
+        "audio/vnd.wave": true,
+        "application/json": true,
+        "audio/wav": true,
+        "audio/opus": true,
+        "text/csv": true,
+        "audio/wave": true,
+        "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet": true,
+        "text/javascript": true,
+        "application/x-typescript": true,
+        "application/pdf": true,
+        "application/x-javascript": true,
+        "video/mp4": true,
+        "text/rtf": true,
+        "text/plain": true,
+        "text/html": true
+      },
+      "thinkingLevel": 3,
+      "modelExperiments": {
+        "experiments": {
+          "CASCADE_USE_EXPERIMENT_CHECKPOINTER": {
+            "stringValue": "{\n    \"strategy\": \"CHECKPOINT_STRATEGY_SAME_MODEL\",\n    \"max_token_limit\": \"256000\",\n    \"token_threshold\": \"50000\",\n    \"max_overhead_ratio\": \"0.15\",\n    \"enabled\": true,\n    \"max_output_tokens\": \"16384\",\n    \"checkpoint_model\": \"MODEL_PLACEHOLDER_M50\",\n    \"use_last_planner_model\": true,\n    \"is_sync\": true,\n    \"max_user_requests\": 10,\n    \"include_last_user_message\": true,\n    \"include_conversation_log\": false,\n    \"include_running_task_snapshots\": true,\n    \"include_subagent_snapshots\": true,\n    \"include_artifact_snapshots\": true,\n    \"retry_config\": {\n        \"max_retries\": 4,\n        \"initial_sleep_duration_ms\": 1000,\n        \"exponential_multiplier\": 2,\n        \"include_error_feedback\": false\n    },\n    \"session_summary_prompt_override\": \"You have been working on the task described above but have not yet completed\\nit. Write a continuation summary that will allow you (or another instance of\\nyourself) to resume work efficiently in a future context window where the\\nfull conversation history will NOT be available\\u2014only this summary.\\n\\nThis summary is all that will be available to you going forward in the future\\ncontext window. Do not call any tools, simply just provide the summary based on\\nthe information available in the current context window.\\n\\nYour summary must be structured, concise, and actionable. Optimize for enabling immediate resumption with zero redundant work.\\n\\nInclude the following sections:\\n\\n1. **Task Overview**\\n   - The user's core request, success criteria, and requested deliverables. Record any target IDs, URLs, or reporting recipients from the request.\\n   - Scope boundaries or task-specific constraints\\n   - Any ambiguities that were resolved (and how)\\n\\n2. **Progress**\\n   - What has been completed, with concrete references (file paths,\\n     test or verification commands run and their outcomes, resource identifiers, tool outputs, URLs, etc.)\\n   - Key plans, design docs, or artifacts produced and their current state\\n   - Skills, documentation, or reference files that were read or inspected\\n   - What is in progress or only inspected/planned, and its current state. Distinguish completed edits from files that were only read or partially edited, and do not mark unverified test commands as completed or passed.\\n\\n3. **Key Findings**\\n   - Technical constraints, requirements, or domain details uncovered\\n   - Decisions made and their rationale\\n\\n4. **Errors & Fixes**\\n   This list should be exhaustive across the entire session so that no resolved or unresolved failure is omitted:\\n   - All errors, failed commands, or test/build failures encountered during the session. Include both errors that were resolved or worked around and any unresolved failures, with specific error messages and root causes.\\n   - How each error was fixed or worked around, and any user feedback on the error\\n   - Approaches that were tried and abandoned (and why\\u2014this prevents\\n     the successor from repeating them)\\n\\n5. **Active Context**\\n   - State of any external resources, sessions, environments, or multi-agent context, such as parent or child agents in use.\\n   - Relevant intermediate results, hypotheses, or working assumptions\\n   - Dependencies between components or steps\\n\\n6. **Next Steps**\\n   The next steps should provide all information required to continue working on the task. This includes any remaining features, bugs, points of investigation, and verification items. This list should be exhaustive, so that an agent working with this list can complete the full original task end-to-end. For example:\\n   - Remaining steps from any agreed plan, design doc, or active workflows and instructions, in priority order. Preserve specific uncompleted items rather than collapsing checklists into high-level summaries.\\n   - Remaining files to create, modify, move, copy, or delete, with the key changes needed in each\\n   - Remaining verification steps, test or build commands, or deliverables needed to complete the task\\n   - Any required cleanup, such as removing temporary files, debug code, or temporary configuration changes.\\n   - Known blockers, open questions, prerequisites, or risks for each step\\n\\n7. **Commitments & Constraints**\\n   - Standing rules, personas, or response formatting requirements from user instructions, rules files, or reference documents.\\n   - Promises made to the user (e.g., \\\"I said I would do X before Y\\\")\\n   - User preferences or style requirements\\n   - Any boundaries the user set on approach, tools, or scope\\n\\nBe concise but complete\\u2014err on the side of including concrete details needed to\\nprevent duplicate work, omitted plan steps, repeated mistakes, or broken promises.\\n\\nWrap your response in <summary></summary> tags.\\n\",\n    \"use_model_reported_token_count\": true\n}"
+          },
+          "cascade-include-ephemeral-message": {
+            "stringValue": "{\n    \"enabled\": false,\n    \"disabledHeuristics\": [\"planning_mode\", \"bash_command_reminder\", \"running_tasks_reminder\"],\n    \"staticMessages\": [],\n    \"useAllowlist\": false,\n    \"enabledHeuristics\": []\n}"
+          },
+          "retry_model_capacity_exhausted": {
+            "boolValue": true
+          },
+          "task-details-suffix": {
+            "stringValue": "\nYOU MUST TAKE ONE OF THE FOLLOWING TWO ACTIONS: A) either proceed to other relevant work (if any) or, B) simply update the user with a short message (that you have launched the command and will wait for it to finish) and end the turn.\n DO NOTHING ELSE."
+          }
+        }
+      }
+    },
+    "tab_flash_lite_preview": {
+      "maxTokens": 16384,
+      "maxOutputTokens": 4096,
+      "quotaInfo": {
+        "remainingFraction": 1
+      },
+      "model": "MODEL_PLACEHOLDER_M19",
+      "apiProvider": "API_PROVIDER_GOOGLE_GEMINI",
+      "modelProvider": "MODEL_PROVIDER_GOOGLE",
+      "supportsCumulativeContext": true,
+      "supportsEstimateTokenCounter": true,
+      "toolFormatterType": "TOOL_FORMATTER_TYPE_XML",
+      "requiresLeadInGeneration": true
+    },
+    "gemini-2.5-flash": {
+      "displayName": "Gemini 3.5 Flash Lite",
+      "supportsImages": true,
+      "supportsThinking": true,
+      "minThinkingBudget": 128,
+      "recommended": true,
+      "maxTokens": 1048576,
+      "maxOutputTokens": 65535,
+      "quotaInfo": {
+        "remainingFraction": 1,
+        "resetTime": "1970-01-01T00:00:00Z"
+      },
+      "model": "MODEL_GOOGLE_GEMINI_2_5_FLASH",
+      "apiProvider": "API_PROVIDER_GOOGLE_GEMINI",
+      "modelProvider": "MODEL_PROVIDER_GOOGLE",
+      "supportsVideo": true,
+      "supportedMimeTypes": {
+        "application/pdf": true,
+        "text/x-typescript": true,
+        "video/webm": true,
+        "application/x-javascript": true,
+        "application/msword": true,
+        "image/png": true,
+        "application/x-typescript": true,
+        "audio/flac": true,
+        "audio/mp3": true,
+        "application/x-ipynb+json": true,
+        "application/rtf": true,
+        "video/text/timestamp": true,
+        "application/vnd.openxmlformats-officedocument.presentationml.presentation": true,
+        "text/html": true,
+        "application/x-python-code": true,
+        "application/json": true,
+        "audio/opus": true,
+        "audio/wave": true,
+        "text/javascript": true,
+        "audio/x-wav": true,
+        "audio/webm": true,
+        "video/jpeg2000": true,
+        "video/audio/s16le": true,
+        "audio/l16": true,
+        "text/csv": true,
+        "text/xml": true,
+        "audio/aac": true,
+        "text/rtf": true,
+        "audio/mp4": true,
+        "text/markdown": true,
+        "audio/vnd.wave": true,
+        "video/videoframe/jpeg2000": true,
+        "image/webp": true,
+        "audio/mpeg": true,
+        "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet": true,
+        "application/vnd.ms-excel": true,
+        "image/jpeg": true,
+        "video/mp4": true,
+        "text/x-python": true,
+        "text/x-python-script": true,
+        "application/vnd.openxmlformats-officedocument.wordprocessingml.document": true,
+        "text/plain": true,
+        "audio/m4a": true,
+        "video/audio/wav": true,
+        "audio/wav": true,
+        "audio/webm;codecs=opus": true,
+        "audio/ogg": true,
+        "image/heic": true,
+        "image/heif": true,
+        "application/vnd.ms-powerpoint": true,
+        "text/css": true
+      },
+      "thinkingLevel": 1,
+      "modelExperiments": {
+        "experiments": {
+          "CASCADE_USE_EXPERIMENT_CHECKPOINTER": {
+            "stringValue": "{\n    \"strategy\": \"CHECKPOINT_STRATEGY_SINGLE_PROMPT\",\n    \"max_token_limit\": \"128000\",\n    \"token_threshold\": \"50000\",\n    \"max_overhead_ratio\": \"0.15\",\n    \"enabled\": true,\n    \"max_output_tokens\": \"16384\",\n    \"checkpoint_model\": \"MODEL_PLACEHOLDER_M50\",\n    \"use_last_planner_model\": false,\n    \"is_sync\": false,\n    \"max_user_requests\": 10,\n    \"include_last_user_message\": false,\n    \"include_conversation_log\": true,\n    \"include_running_task_snapshots\": true,\n    \"include_subagent_snapshots\": true,\n    \"include_artifact_snapshots\": true,\n    \"retry_config\": {\n        \"max_retries\": 0,\n        \"initial_sleep_duration_ms\": 1000,\n        \"exponential_multiplier\": 2,\n        \"include_error_feedback\": false\n    },\n    \"session_summary_prompt_override\": \"\",\n    \"use_model_reported_token_count\": true\n}"
+          },
+          "retry_model_capacity_exhausted": {
+            "boolValue": true
+          }
+        }
+      }
+    },
+    "gemini-2.5-flash-lite": {
+      "displayName": "Gemini 3.5 Flash Lite",
+      "supportsImages": true,
+      "supportsThinking": true,
+      "minThinkingBudget": 128,
+      "recommended": true,
+      "maxTokens": 1048576,
+      "maxOutputTokens": 65535,
+      "quotaInfo": {
+        "remainingFraction": 1,
+        "resetTime": "1970-01-01T00:00:00Z"
+      },
+      "model": "MODEL_GOOGLE_GEMINI_2_5_FLASH_LITE",
+      "apiProvider": "API_PROVIDER_GOOGLE_GEMINI",
+      "modelProvider": "MODEL_PROVIDER_GOOGLE",
+      "supportsVideo": true,
+      "supportedMimeTypes": {
+        "text/plain": true,
+        "audio/ogg": true,
+        "image/heif": true,
+        "image/png": true,
+        "audio/mp4": true,
+        "application/rtf": true,
+        "application/vnd.openxmlformats-officedocument.wordprocessingml.document": true,
+        "audio/flac": true,
+        "image/heic": true,
+        "application/vnd.ms-powerpoint": true,
+        "audio/wav": true,
+        "text/x-python-script": true,
+        "text/x-python": true,
+        "video/text/timestamp": true,
+        "audio/mpeg": true,
+        "video/mp4": true,
+        "audio/webm;codecs=opus": true,
+        "audio/opus": true,
+        "audio/m4a": true,
+        "text/html": true,
+        "image/jpeg": true,
+        "application/vnd.openxmlformats-officedocument.presentationml.presentation": true,
+        "text/x-typescript": true,
+        "audio/webm": true,
+        "audio/wave": true,
+        "application/msword": true,
+        "audio/l16": true,
+        "audio/x-wav": true,
+        "audio/aac": true,
+        "text/markdown": true,
+        "text/rtf": true,
+        "application/x-ipynb+json": true,
+        "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet": true,
+        "application/x-python-code": true,
+        "application/x-typescript": true,
+        "application/vnd.ms-excel": true,
+        "video/audio/s16le": true,
+        "application/pdf": true,
+        "application/json": true,
+        "text/xml": true,
+        "video/audio/wav": true,
+        "audio/mp3": true,
+        "text/css": true,
+        "application/x-javascript": true,
+        "image/webp": true,
+        "text/csv": true,
+        "audio/vnd.wave": true,
+        "video/webm": true,
+        "video/videoframe/jpeg2000": true,
+        "text/javascript": true,
+        "video/jpeg2000": true
+      },
+      "thinkingLevel": 1,
+      "modelExperiments": {
+        "experiments": {
+          "retry_model_capacity_exhausted": {
+            "boolValue": true
+          },
+          "CASCADE_USE_EXPERIMENT_CHECKPOINTER": {
+            "stringValue": "{\n    \"strategy\": \"CHECKPOINT_STRATEGY_SINGLE_PROMPT\",\n    \"max_token_limit\": \"128000\",\n    \"token_threshold\": \"50000\",\n    \"max_overhead_ratio\": \"0.15\",\n    \"enabled\": true,\n    \"max_output_tokens\": \"16384\",\n    \"checkpoint_model\": \"MODEL_PLACEHOLDER_M50\",\n    \"use_last_planner_model\": false,\n    \"is_sync\": false,\n    \"max_user_requests\": 10,\n    \"include_last_user_message\": false,\n    \"include_conversation_log\": true,\n    \"include_running_task_snapshots\": true,\n    \"include_subagent_snapshots\": true,\n    \"include_artifact_snapshots\": true,\n    \"retry_config\": {\n        \"max_retries\": 0,\n        \"initial_sleep_duration_ms\": 1000,\n        \"exponential_multiplier\": 2,\n        \"include_error_feedback\": false\n    },\n    \"session_summary_prompt_override\": \"\",\n    \"use_model_reported_token_count\": true\n}"
+          }
+        }
+      }
+    },
+    "gpt-oss-120b-medium": {
+      "displayName": "GPT-OSS 120B (Medium)",
+      "supportsThinking": true,
+      "thinkingBudget": 8192,
+      "recommended": true,
+      "maxTokens": 131072,
+      "maxOutputTokens": 32768,
+      "quotaInfo": {
+        "remainingFraction": 1,
+        "resetTime": "1970-01-01T00:00:00Z"
+      },
+      "model": "MODEL_OPENAI_GPT_OSS_120B_MEDIUM",
+      "apiProvider": "API_PROVIDER_OPENAI_VERTEX",
+      "modelProvider": "MODEL_PROVIDER_OPENAI",
+      "tagTitle": "Notice",
+      "tagDescription": "GPT-OSS will be removed from Antigravity on November 2, 2026.",
+      "modelExperiments": {
+        "experiments": {
+          "CASCADE_USE_EXPERIMENT_CHECKPOINTER": {
+            "stringValue": "{\n    \"strategy\": \"CHECKPOINT_STRATEGY_UNSPECIFIED\",\n    \"max_token_limit\": \"80000\",\n    \"token_threshold\": \"50000\",\n    \"max_overhead_ratio\": \"0.15\",\n    \"enabled\": true,\n    \"max_output_tokens\": \"8192\",\n    \"checkpoint_model\": \"MODEL_PLACEHOLDER_M50\",\n    \"use_last_planner_model\": false,\n    \"is_sync\": false,\n    \"max_user_requests\": 10,\n    \"include_last_user_message\": false,\n    \"include_conversation_log\": true,\n    \"include_running_task_snapshots\": true,\n    \"include_subagent_snapshots\": true,\n    \"include_artifact_snapshots\": true,\n    \"retry_config\": {\n        \"max_retries\": 0,\n        \"initial_sleep_duration_ms\": 1000,\n        \"exponential_multiplier\": 2,\n        \"include_error_feedback\": false\n    },\n    \"session_summary_prompt_override\": \"\",\n    \"use_model_reported_token_count\": true\n}"
+          }
+        }
+      },
+      "vertexModelId": "openai/gpt-oss-120b-maas"
+    },
+    "chat_20706": {
+      "maxTokens": 16384,
+      "quotaInfo": {
+        "remainingFraction": 1
+      },
+      "model": "MODEL_CHAT_20706",
+      "apiProvider": "API_PROVIDER_INTERNAL",
+      "modelProvider": "MODEL_PROVIDER_GOOGLE",
+      "supportsCumulativeContext": true,
+      "tabJumpPrintLineRange": true,
+      "supportsEstimateTokenCounter": true,
+      "isInternal": true,
+      "addCursorToFindReplaceTarget": true,
+      "promptTemplaterType": "PROMPT_TEMPLATER_TYPE_CHATML",
+      "toolFormatterType": "TOOL_FORMATTER_TYPE_XML",
+      "requiresLeadInGeneration": true
+    },
+    "claude-opus-5-5-medium": {
+      "displayName": "Claude Opus 5.5 (Medium)",
+      "supportsImages": true,
+      "supportsThinking": true,
+      "recommended": true,
+      "maxTokens": 1000000,
+      "maxOutputTokens": 128000,
+      "quotaInfo": {
+        "remainingFraction": 1,
+        "resetTime": "1970-01-01T00:00:00Z"
+      },
+      "model": "MODEL_PLACEHOLDER_M401",
+      "apiProvider": "API_PROVIDER_ANTHROPIC_VERTEX",
+      "modelProvider": "MODEL_PROVIDER_ANTHROPIC",
+      "tagTitle": "New",
+      "supportedMimeTypes": {
+        "image/heif": true,
+        "image/jpeg": true,
+        "image/png": true,
+        "image/webp": true,
+        "video/jpeg2000": true,
+        "video/videoframe/jpeg2000": true,
+        "image/heic": true
+      },
+      "thinkingLevel": 2,
+      "modelExperiments": {
+        "experiments": {
+          "CASCADE_USE_EXPERIMENT_CHECKPOINTER": {
+            "stringValue": "{\n    \"strategy\": \"CHECKPOINT_STRATEGY_SAME_MODEL\",\n    \"max_token_limit\": \"256000\",\n    \"token_threshold\": \"50000\",\n    \"max_overhead_ratio\": \"0.15\",\n    \"enabled\": true,\n    \"max_output_tokens\": \"16384\",\n    \"checkpoint_model\": \"MODEL_PLACEHOLDER_M50\",\n    \"use_last_planner_model\": true,\n    \"is_sync\": true,\n    \"max_user_requests\": 10,\n    \"include_last_user_message\": true,\n    \"include_conversation_log\": false,\n    \"include_running_task_snapshots\": true,\n    \"include_subagent_snapshots\": true,\n    \"include_artifact_snapshots\": true,\n    \"retry_config\": {\n        \"max_retries\": 4,\n        \"initial_sleep_duration_ms\": 1000,\n        \"exponential_multiplier\": 2,\n        \"include_error_feedback\": false\n    },\n    \"session_summary_prompt_override\": \"\",\n    \"use_model_reported_token_count\": true\n}"
+          },
+          "CASCADE_USE_EXPERIMENT_CHECKPOINTER/claude-1m_840k": {
+            "stringValue": "{\n    \"strategy\": \"CHECKPOINT_STRATEGY_SAME_MODEL\",\n    \"max_token_limit\": \"840000\",\n    \"token_threshold\": \"50000\",\n    \"max_overhead_ratio\": \"0.15\",\n    \"enabled\": true,\n    \"max_output_tokens\": \"16384\",\n    \"checkpoint_model\": \"MODEL_PLACEHOLDER_M50\",\n    \"use_last_planner_model\": true,\n    \"is_sync\": true,\n    \"max_user_requests\": 10,\n    \"include_last_user_message\": true,\n    \"include_conversation_log\": false,\n    \"include_running_task_snapshots\": true,\n    \"include_subagent_snapshots\": true,\n    \"include_artifact_snapshots\": true,\n    \"retry_config\": {\n        \"max_retries\": 4,\n        \"initial_sleep_duration_ms\": 1000,\n        \"exponential_multiplier\": 2,\n        \"include_error_feedback\": false\n    },\n    \"session_summary_prompt_override\": \"\",\n    \"use_model_reported_token_count\": true\n}"
+          },
+          "retry_model_capacity_exhausted": {
+            "boolValue": true
+          }
+        }
+      },
+      "vertexModelId": "claude-opus-5-5@default",
+      "supportsAdaptiveThinking": true
+    },
+    "gemini-2.5-pro": {
+      "displayName": "Gemini 2.5 Pro",
+      "supportsImages": true,
+      "supportsThinking": true,
+      "thinkingBudget": 1024,
+      "minThinkingBudget": 128,
+      "recommended": true,
+      "maxTokens": 1048576,
+      "maxOutputTokens": 65535,
+      "quotaInfo": {
+        "remainingFraction": 1,
+        "resetTime": "1970-01-01T00:00:00Z"
+      },
+      "model": "MODEL_GOOGLE_GEMINI_2_5_PRO",
+      "apiProvider": "API_PROVIDER_GOOGLE_GEMINI",
+      "modelProvider": "MODEL_PROVIDER_GOOGLE",
+      "supportedMimeTypes": {
+        "video/webm": true,
+        "application/x-ipynb+json": true,
+        "audio/opus": true,
+        "video/text/timestamp": true,
+        "audio/flac": true,
+        "text/x-python-script": true,
+        "text/x-typescript": true,
+        "image/png": true,
+        "text/javascript": true,
+        "audio/webm": true,
+        "text/plain": true,
+        "text/csv": true,
+        "video/audio/wav": true,
+        "audio/wave": true,
+        "audio/ogg": true,
+        "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet": true,
+        "text/css": true,
+        "application/x-javascript": true,
+        "audio/webm;codecs=opus": true,
+        "video/videoframe/jpeg2000": true,
+        "application/x-typescript": true,
+        "image/webp": true,
+        "audio/x-wav": true,
+        "text/xml": true,
+        "application/x-python-code": true,
+        "application/vnd.openxmlformats-officedocument.presentationml.presentation": true,
+        "audio/vnd.wave": true,
+        "text/html": true,
+        "video/jpeg2000": true,
+        "application/rtf": true,
+        "audio/aac": true,
+        "text/x-python": true,
+        "text/markdown": true,
+        "application/pdf": true,
+        "video/audio/s16le": true,
+        "image/heic": true,
+        "application/vnd.openxmlformats-officedocument.wordprocessingml.document": true,
+        "application/json": true,
+        "video/mp4": true,
+        "audio/mpeg": true,
+        "application/vnd.ms-excel": true,
+        "audio/wav": true,
+        "application/vnd.ms-powerpoint": true,
+        "audio/m4a": true,
+        "text/rtf": true,
+        "image/jpeg": true,
+        "application/msword": true,
+        "audio/mp3": true,
+        "audio/l16": true,
+        "audio/mp4": true,
+        "image/heif": true
+      },
+      "requiresImageOutputOutsideFunctionResponses": true,
+      "modelExperiments": {
+        "experiments": {
+          "CASCADE_USE_EXPERIMENT_CHECKPOINTER": {
+            "stringValue": "{\n    \"strategy\": \"CHECKPOINT_STRATEGY_SINGLE_PROMPT\",\n    \"max_token_limit\": \"128000\",\n    \"token_threshold\": \"50000\",\n    \"max_overhead_ratio\": \"0.15\",\n    \"enabled\": true,\n    \"max_output_tokens\": \"16384\",\n    \"checkpoint_model\": \"MODEL_PLACEHOLDER_M50\",\n    \"use_last_planner_model\": false,\n    \"is_sync\": false,\n    \"max_user_requests\": 10,\n    \"include_last_user_message\": false,\n    \"include_conversation_log\": true,\n    \"include_running_task_snapshots\": true,\n    \"include_subagent_snapshots\": true,\n    \"include_artifact_snapshots\": true,\n    \"retry_config\": {\n        \"max_retries\": 0,\n        \"initial_sleep_duration_ms\": 1000,\n        \"exponential_multiplier\": 2,\n        \"include_error_feedback\": false\n    },\n    \"session_summary_prompt_override\": \"\",\n    \"use_model_reported_token_count\": true\n}"
+          }
+        }
+      }
+    },
+    "claude-sonnet-5-5-medium": {
+      "displayName": "Claude Sonnet 5.5 (Medium)",
+      "supportsImages": true,
+      "supportsThinking": true,
+      "recommended": true,
+      "maxTokens": 1000000,
+      "maxOutputTokens": 128000,
+      "quotaInfo": {
+        "remainingFraction": 1,
+        "resetTime": "1970-01-01T00:00:00Z"
+      },
+      "model": "MODEL_PLACEHOLDER_M404",
+      "apiProvider": "API_PROVIDER_ANTHROPIC_VERTEX",
+      "modelProvider": "MODEL_PROVIDER_ANTHROPIC",
+      "tagTitle": "New",
+      "supportedMimeTypes": {
+        "image/webp": true,
+        "video/jpeg2000": true,
+        "video/videoframe/jpeg2000": true,
+        "image/heic": true,
+        "image/heif": true,
+        "image/jpeg": true,
+        "image/png": true
+      },
+      "thinkingLevel": 2,
+      "modelExperiments": {
+        "experiments": {
+          "retry_model_capacity_exhausted": {
+            "boolValue": true
+          },
+          "CASCADE_USE_EXPERIMENT_CHECKPOINTER": {
+            "stringValue": "{\n    \"strategy\": \"CHECKPOINT_STRATEGY_SAME_MODEL\",\n    \"max_token_limit\": \"256000\",\n    \"token_threshold\": \"50000\",\n    \"max_overhead_ratio\": \"0.15\",\n    \"enabled\": true,\n    \"max_output_tokens\": \"16384\",\n    \"checkpoint_model\": \"MODEL_PLACEHOLDER_M50\",\n    \"use_last_planner_model\": true,\n    \"is_sync\": true,\n    \"max_user_requests\": 10,\n    \"include_last_user_message\": true,\n    \"include_conversation_log\": false,\n    \"include_running_task_snapshots\": true,\n    \"include_subagent_snapshots\": true,\n    \"include_artifact_snapshots\": true,\n    \"retry_config\": {\n        \"max_retries\": 4,\n        \"initial_sleep_duration_ms\": 1000,\n        \"exponential_multiplier\": 2,\n        \"include_error_feedback\": false\n    },\n    \"session_summary_prompt_override\": \"\",\n    \"use_model_reported_token_count\": true\n}"
+          },
+          "CASCADE_USE_EXPERIMENT_CHECKPOINTER/claude-1m_840k": {
+            "stringValue": "{\n    \"strategy\": \"CHECKPOINT_STRATEGY_SAME_MODEL\",\n    \"max_token_limit\": \"840000\",\n    \"token_threshold\": \"50000\",\n    \"max_overhead_ratio\": \"0.15\",\n    \"enabled\": true,\n    \"max_output_tokens\": \"16384\",\n    \"checkpoint_model\": \"MODEL_PLACEHOLDER_M50\",\n    \"use_last_planner_model\": true,\n    \"is_sync\": true,\n    \"max_user_requests\": 10,\n    \"include_last_user_message\": true,\n    \"include_conversation_log\": false,\n    \"include_running_task_snapshots\": true,\n    \"include_subagent_snapshots\": true,\n    \"include_artifact_snapshots\": true,\n    \"retry_config\": {\n        \"max_retries\": 4,\n        \"initial_sleep_duration_ms\": 1000,\n        \"exponential_multiplier\": 2,\n        \"include_error_feedback\": false\n    },\n    \"session_summary_prompt_override\": \"\",\n    \"use_model_reported_token_count\": true\n}"
+          }
+        }
+      },
+      "vertexModelId": "claude-sonnet-5-5@default",
+      "supportsAdaptiveThinking": true
+    }
+  },
+  "defaultAgentModelId": "claude-opus-5-5-low",
+  "agentModelSorts": [
+    {
+      "displayName": "Recommended",
+      "groups": [
+        {
+          "modelIds": [
+            "claude-opus-5-5-low",
+            "claude-opus-5-5-medium",
+            "claude-opus-5-5-high",
+            "claude-sonnet-5-5-low",
+            "claude-sonnet-5-5-medium",
+            "claude-sonnet-5-5-high",
+            "gpt-oss-120b-medium"
+          ]
+        }
+      ]
+    }
+  ],
+  "commandModelIds": [
+    "gemini-3-flash"
+  ],
+  "tabModelIds": [
+    "chat_20706",
+    "chat_23310"
+  ],
+  "imageGenerationModelIds": [
+    "gemini-3.1-flash-image"
+  ],
+  "mqueryModelIds": [
+    "gemini-3.5-flash-lite"
+  ],
+  "webSearchModelIds": [
+    "gemini-3.5-flash-lite"
+  ],
+  "commitMessageModelIds": [
+    "gemini-3.5-flash-lite"
+  ],
+  "audioTranscriptionModelIds": [
+    "models/proactive-observer-v10"
+  ],
+  "experimentIds": [
+    106826239,
+    106828853,
+    106827293,
+    106826316,
+    106828852,
+    106827294,
+    106791760,
+    106786387,
+    106791766,
+    106865005,
+    106865006,
+    106865004,
+    106828854,
+    1714240,
+    106140402,
+    106927140,
+    106805876,
+    105979552,
+    105979574,
+    106015333,
+    105867471,
+    106749606,
+    106121401,
+    106100625,
+    106754391,
+    106143956,
+    105856899,
+    106064030,
+    106544525,
+    106021688,
+    105887299,
+    106949161,
+    106811917,
+    106793266,
+    106798730,
+    106833630,
+    106380926,
+    106281951,
+    106264532,
+    106822474,
+    106032303,
+    106228452,
+    106825246,
+    106121607,
+    106644207,
+    106848342,
+    105979531,
+    105979553,
+    106015328,
+    105867469,
+    106121399,
+    106100654,
+    106064028,
+    106032301,
+    106825242,
+    106121604,
+    106644204,
+    106778026,
+    106786388
+  ],
+  "tieredModelIds": {
+    "flashLite": [
+      "gemini-3.5-flash-lite"
+    ],
+    "flash": [
+      "gemini-3.8-flash-tiered"
+    ],
+    "pro": [
+      "gemini-3.8-flash-tiered"
+    ]
+  }
+}
