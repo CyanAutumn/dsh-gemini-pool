@@ -28,7 +28,7 @@ OAuth 登录、多账号池、**实时模型目录**（含 Gemini 4 Argon / Clau
 
 ### 请求行为对齐官方 CLI
 
-抓包比对后逐项对齐（详见 [docs/GENERATE-BODY-DIFF.md](docs/GENERATE-BODY-DIFF.md)）：
+抓包比对后逐项对齐：
 
 | 项 | 说明 |
 |---|---|
@@ -112,19 +112,21 @@ pnpm install
 
 ## 与上游差异
 
-完整列表见 [LOCAL-PATCH.md](LOCAL-PATCH.md)，逆向与验证材料见：
-
-- [docs/REVERSE-AGY.md](docs/REVERSE-AGY.md) —— 对 Antigravity CLI / 桌面版的行为逆向
-- [docs/GENERATE-BODY-DIFF.md](docs/GENERATE-BODY-DIFF.md) —— 生成请求体逐字段对照
-- [docs/RISK-AND-PARITY.md](docs/RISK-AND-PARITY.md) —— 请求画像与风控考量
+完整列表见 [LOCAL-PATCH.md](LOCAL-PATCH.md)（该文件只记录改了什么，不含抓包原文或账号信息）。
 
 ## 自检
 
 ```bash
-node test/catalog-test.mjs        # 实时目录 → 可选模型 的合并逻辑
-node test/tool-schema-test.mjs    # JSON Schema → Gemini Schema（CLI 同构）
-node test/preamble-test.mjs       # 前言文本归类
-node test/usage-pill-test.mjs     # 额度徽标注册与渲染
+npm run check          # 全部自检（上游 103 项 + 本 fork 4 项）
+```
+
+单独跑本 fork 新增的四项：
+
+```bash
+node test/live-catalog.test.mjs        # 实时目录 → 可选模型 的合并逻辑
+node test/tool-schema.test.mjs         # JSON Schema → Gemini Schema（CLI 同构）
+node test/preamble-reasoning.test.mjs  # 工具调用前的正文归类
+node test/usage-pill.test.mjs          # 额度徽标注册与渲染
 ```
 
 ## 已知限制

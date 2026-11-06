@@ -1,8 +1,7 @@
 # 本地补丁说明（基于上游 dsh-gemini-pool 0.8.2）
 
 这个包**不是**上游原样发布：`lib/models.js`、`lib/index.js`、`lib/client.js`、`package.json`
-都经过本地修补。上游发新版并覆盖本包时，需要重新打补丁（补丁与全部证据见同目录的
-`docs/`、`captured/`，以及 Desktop 上 `dsh-gemini-pool-patched/0.8.2-live-catalog.patch`）。
+都经过本地修补。上游发新版并覆盖本包时，需要重新打补丁。
 
 ## 包含的修补
 
