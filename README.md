@@ -22,6 +22,13 @@ OAuth 登录、多账号池、**实时模型目录**（含 Gemini 4 Argon / Clau
 - 变体自动合并：`gemini-4-argon-{low,medium,high}` 合并为一个「Gemini 4 Argon」条目，带 `runtimeIds` / `modelEnums` / `thinkingLevels`。
 - 新模型自动出现在列表里，无需改代码；设置页「刷新额度与模型列表」可手动触发。
 
+### 模型家族适配（CLI 1.5.2 抓包）
+
+- **Gemini 4 Argon / Claude 5.5**：`thinkingConfig.thinkingLevel`（低/中/高档），输出上限分别 64k / 128k；
+- **GPT-OSS 120B**：`thinkingConfig.thinkingBudget = 8192`，输出上限 32k；
+- **工具声明**：所有家族统一使用大写 Gemini Schema 的 `parameters`（Claude 不再走 JSON-Schema 透传）；
+- **labels**：Claude 置 `used_claude` / `used_claude_conservative = "true"`，GPT-OSS 置 `used_non_gemini_model = "true"`；
+- 回归测试 `test/model-family-parity.test.mjs` 用脱敏 fixtures 逐字段对照 CLI 请求体。
 ### 聊天框额度徽标
 
 模型选择器左侧的 `AGY xx%`：显示本周剩余额度，点开看 Gemini / Claude & GPT / Gemini 4 Argon 三个桶的周额度与 5 小时额度及重置时间。

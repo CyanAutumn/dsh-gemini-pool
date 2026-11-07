@@ -165,7 +165,9 @@ check("thinking level for tiered", runtimeSupportsThinkingLevel("gemini-3.8-flas
 check("thinking level for argon", runtimeSupportsThinkingLevel("gemini-4-argon"));
 check("thinking level for argon variant", runtimeSupportsThinkingLevel("gemini-4-argon-high"));
 check("no thinking level for plain gemini", !runtimeSupportsThinkingLevel("gemini-3-flash"));
-check("no thinking level for claude", !runtimeSupportsThinkingLevel("claude-opus-5-5-high"));
+check("thinking level for claude 5.5", runtimeSupportsThinkingLevel("claude-opus-5-5-high"));
+check("thinking level for claude sonnet 5.5", runtimeSupportsThinkingLevel("claude-sonnet-5-5-medium"));
+check("no thinking level for older claude", !runtimeSupportsThinkingLevel("claude-opus-4-6-thinking"));
 
 // 7. enable-merge semantics (mirrors the stored settings of this profile)
 // The pre-patch 0.8.2 static catalog plus the one enabled model, as a fixed
