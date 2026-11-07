@@ -1,0 +1,94 @@
+[
+  {
+    "name": "read",
+    "description": "Read a UTF-8 text file and return line-numbered content.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "file_path": {
+          "type": "string",
+          "description": "Path to read, resolved by the filesystem backend."
+        },
+        "offset": {
+          "type": "number",
+          "description": "1-based first line to return. Defaults to 1."
+        },
+        "limit": {
+          "type": "number",
+          "description": "Maximum number of lines to return."
+        }
+      },
+      "required": ["file_path"]
+    }
+  },
+  {
+    "name": "edit",
+    "description": "Edit an existing UTF-8 text file by replacing literal text.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "file_path": {
+          "type": "string",
+          "description": "Path to edit, resolved by the filesystem backend."
+        },
+        "old_string": {
+          "type": "string",
+          "description": "Literal text to replace."
+        },
+        "new_string": {
+          "type": "string",
+          "description": "Literal replacement text. Use an empty string to delete the match."
+        },
+        "replace_all": {
+          "type": "boolean",
+          "description": "Replace all matches."
+        },
+        "sandbox_permissions": {
+          "type": "string",
+          "description": "The narrowest wider sandbox mode for a one-shot retry of the exact operation the sandbox just denied.",
+          "enum": ["workspace-write", "danger-full-access"]
+        },
+        "justification": {
+          "type": "string",
+          "description": "Required with sandbox_permissions: one sentence explaining why this operation needs the wider access."
+        }
+      },
+      "required": ["file_path", "old_string", "new_string"]
+    }
+  },
+  {
+    "name": "update_goal",
+    "description": "Update the current goal.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "goal_id": {
+          "type": "string",
+          "description": "Exact id returned by get_goal."
+        },
+        "revision": {
+          "type": "number",
+          "description": "Exact positive revision returned by get_goal."
+        },
+        "action": {
+          "type": "string",
+          "description": "Goal transition to apply.",
+          "enum": ["edit", "pause", "resume", "complete", "blocked"]
+        },
+        "objective": {
+          "type": "string",
+          "description": "Replacement objective."
+        },
+        "max_goal_rounds": {
+          "type": "number",
+          "description": "Replacement cap."
+        },
+        "blocked_reason": {
+          "type": "string",
+          "description": "Required only with action blocked."
+        }
+      },
+      "required": ["goal_id", "revision", "action"]
+    }
+  }
+]

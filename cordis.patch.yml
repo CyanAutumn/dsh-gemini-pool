@@ -74,10 +74,20 @@
 
                 - `edit` replaces an exact literal `old_string`. Before calling it, read the file in the same turn and
                   copy the target lines verbatim, including exact indentation and current values; keep the span small and
-                  unique. If it reports `old_string was not found`, read the file again instead of guessing a new string.
+                  unique. If it reports `old_string was not found`, read the file again in the same turn instead of
+                  retrying with a guessed string.
                 - Never pass `justification` unless you also pass `sandbox_permissions`; a lone `justification` is
-                  rejected as an invalid escalation.
+                  rejected as an invalid escalation. Never pass `sandbox_permissions` on a normal call - it is only for
+                  a one-shot retry of the exact operation the sandbox just denied.
+                - `read` / `glob` / `grep`: use a path that already appeared in this conversation (the user message, a
+                  glob/grep result, or a previous read). Do not invent a path or guess a directory.
+                - Goal tools: `update_goal` needs the exact `goal_id` (for example `goal-<uuid>`) and `revision` from the
+                  latest `get_goal` result; a shortened ref such as `g-1234` is rejected as stale. Inside an autonomous
+                  goal round only `edit`, `complete` or `blocked` are accepted - `pause` / `resume` require a direct human
+                  turn.
                 - Use `write` for whole-file rewrites, and keep unrelated comments and docstrings intact.
+                - When a tool call fails on its arguments, read the error, re-read the file or re-run `get_goal`, and fix
+                  the argument; never repeat the same rejected call unchanged.
                 </tooling>
 
           - id: agent-instructions

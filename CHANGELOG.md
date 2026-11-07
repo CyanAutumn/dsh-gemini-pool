@@ -2,6 +2,20 @@
 
 本项目遵循 [Keep a Changelog](https://keepachangelog.com/zh-CN/1.1.0/) 格式，版本号遵循 [Semantic Versioning](https://semver.org/lang/zh-CN/)。
 
+## v0.8.2-patch.11 — 2026-11-07
+
+### Fixed
+- **模型类过程报错（工具调用参数被 DSH 拒绝）在适配器层修复**：审计会话里 Gemini 4 Argon 产生 11 次 `invalid escalation: justification is only valid together with sandbox_permissions`、10 次 `old_string was not found in "<file>"`、各 1 次 `cannot read …: not found` / `stale goal ref` / `goal operation requires a direct human turn`。现在：
+  - `processStreamLine()` 在发出 `tool-call` 之前调用 `repairToolArguments()`（新增 `lib/tool-repair.js`）：剔除单独出现的 `justification`、归一 `sandbox_permissions` 拼写并丢弃非法/空值、解析被当成字符串返回的 `args`、把 `edit.old_string` 的 CRLF/LF、行尾空白、缩进、行内多空格差异修补成文件里的**唯一**原文（不唯一就原样放行，绝不猜值）；
+  - 下一次请求由 `buildRepairHint()`（新增 `lib/prompt-repair.js`）在 systemInstruction 里按需追加一次性 `<tool_repair>`：`old_string` 被拒时给出该文件真实字节（带行号，长文件取最相似窗口），路径不存在时给出最近目录条目，goal 被拒时给出恢复指令；文件不可读则不注入，永不写入 transcript；
+  - `hardenToolSchema()` 给 `edit.old_string`、`read.file_path`、`update_goal.goal_id/revision/action` 追加约束句；预设提示词 `<tooling>` 段同步加入 goal 工具与 read 路径规则；
+  - 诊断新增 `toolRepairs: { total, byKind }`。
+- 刻意不改 `old_string` 的**值**：10 例失败的根因是模型把想要的新值写进了 `old_string`（如把文件里的 `0.10` 写成 `0.08`），替它改值会改错代码；也不改 `new_string`、不发明路径、不自动重发请求。
+
+### 验证
+- `npm run check` 158/158（v0.8.2 基线 129 项全保留 + 新增 29 项：`tool-repair` 16、`tool-repair-integration` 2、`tool-schema-cautions` 5、`prompt-repair` 6）
+- 回放审计会话原始参数：11/11 条 `invalid escalation` 变为合法调用；10/10 条 `old_string was not found` 生成含真实文件内容的 `<tool_repair>` 提示
+
 ## v0.8.2 — 2026-10-05
 
 ### Fixed

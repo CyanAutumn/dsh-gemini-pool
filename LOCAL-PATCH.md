@@ -4,9 +4,48 @@
 都经过本地修补。上游发新版并覆盖本包时，需要重新打补丁（补丁与全部证据见同目录的
 `docs/`、`captured/`，以及 Desktop 上 `dsh-gemini-pool-patched/0.8.2-live-catalog.patch`）。
 
+## 2026-11-07 增补：模型类过程报错修复（工具参数修复 + 失败回注）
+
+审计会话 `session-02cf33e9`（Gemini 4 Argon，94 次 edit / 330 次工具调用）逐条统计出的
+「模型自己造成的调用报错」与处理：
+
+| 报错 | 次数 | 处理 |
+|---|---|---|
+| `invalid escalation: justification is only valid together with sandbox_permissions` | 11 | 适配器在发出调用前删掉单独出现的 `justification`（11/11 消除） |
+| `old_string was not found in "<file>"` | 10 | ① 对 CRLF/LF、行尾空白、缩进、行内多空格做**唯一**匹配，命中则重写 `old_string`；② 仍未命中时不猜值，改为在**下一次请求**的 systemInstruction 附上该文件真实字节（带行号；长文件取最相似窗口），让模型照抄 |
+| `cannot read "<path>": not found` | 1 | 下一次请求附上最近存在目录的条目列表，并要求改用 `glob` / `grep` |
+| `stale goal ref "g-…"` | 1 | 下一次请求提示先 `get_goal` 再原样传 `goal_id` / `revision`；schema 同步追加约束句 |
+| `this goal operation requires a direct human turn` | 1 | 同上（提示 `pause` / `resume` 只能在人类回合调用） |
+
+实现：
+
+- 新增 `lib/tool-repair.js`：`repairToolArguments()` 在 `processStreamLine()` 收到 `functionCall`、
+  发出 `tool-call-delta` **之前**执行——剔除单飞 `justification`、归一
+  `sandbox_permissions` 别名/非法值、解析被当成字符串返回的 `args`、修补 `edit.old_string`
+  的空白类差异（只接受文件内唯一命中；命中不唯一就原样放行）；
+- 新增 `lib/prompt-repair.js`：`buildRepairHint()` 只扫会话尾部 8 条消息里的 `isError`
+  工具结果，命中上面四类签名才在**该次请求**的 systemInstruction 追加 `<tool_repair>`
+  （一次性、不写入 transcript、文件不可读则不注入）；
+- `lib/models.js`：`hardenToolSchema()` 在既有 escalation 描述加固之外，给
+  `edit.old_string`、`read.file_path`、`update_goal.goal_id/revision/action` 追加约束句；
+- 预设提示词（`cordis.patch.yml`）`<tooling>` 段同步加入 goal 工具规则与 read 路径规则；
+- 诊断：`getAntigravityDiagnostics().toolRepairs` 暴露 `{ total, byKind }`。
+
+**刻意不做**：不猜 `old_string` 的值（这 10 例的根因是模型把**想要的新值**写进了
+`old_string`，替它改值会改错代码）、不改 `new_string`、不发明路径、不自动重发请求。
+
+**回归**：`npm run check` 158/158（新增 `tool-repair` 16、`tool-repair-integration` 2、
+`tool-schema-cautions` 5、`prompt-repair` 6）。
+
+**回放**：把审计会话里 11 条 `invalid escalation` 的原始参数喂给修复层，11/11 变成合法调用；
+10 条 `old_string was not found` 全部生成带真实字节的 `<tool_repair>` 提示
+（例：`devil.gd` 的实际 `speed = 0.10` / `life = 1000.0`，模型当时写的是 `0.08` / `200.0`）。
+
+
 ## 2026-11-07 增补：内置「Gemini（CLI 风格）」Agent 预设（预设提示词，不再塞进插件）
 
-插件不再向 `systemInstruction` 追加任何文本（原来的委派/escalation/edit 追加段落已删除）。
+插件不再向 `systemInstruction` 追加**常驻**文本（原来的委派/escalation/edit 追加段落已删除；
+仅在上一轮工具参数被拒时按需追加一次性的 `<tool_repair>` 提示，见上一节）。
 改为在插件自己的 bundle patch（`cordis.patch.yml`）里 **自动注册一个 Agent 预设** `gemini-cli`：
 
 - 提示词：Antigravity CLI 的 `<identity>` / `<guidelines>` / `<communication_style>` 原文，

@@ -19,6 +19,9 @@ function build(enabled) {
   const classifyAntigravityError = () => "ANTIGRAVITY_ERROR";
   const thoughtSignatureOf = (part) => part?.thoughtSignature || part?.thought_signature;
   const sanitizeToolCallId = (id, fallback) => String(id || fallback || "tool").replace(/[^a-zA-Z0-9_-]/g, "_");
+  const parseToolArguments = (raw) => (isRecord(raw) ? raw : {});
+  const repairToolArguments = (name, args) => ({ args, repairs: [] });
+  const recordToolRepairs = () => {};
   function antigravityEnv(name) { return name === "PREAMBLE_AS_REASONING" ? ${JSON.stringify(enabled ? "1" : "0")} : process.env["ANTIGRAVITY_" + name]; }
   `;
   return new Function(`${stubs}\n${parser}\nreturn processStreamLine;`)();
