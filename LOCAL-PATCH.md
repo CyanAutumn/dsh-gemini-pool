@@ -4,6 +4,32 @@
 都经过本地修补。上游发新版并覆盖本包时，需要重新打补丁（补丁与全部证据见同目录的
 `docs/`、`captured/`，以及 Desktop 上 `dsh-gemini-pool-patched/0.8.2-live-catalog.patch`）。
 
+## 2026-11-07 修复：连接被切断时整轮直接失败（`terminated` / UNKNOWN）
+
+现象：`session-45e733d0` 跑到第 77 步时整轮失败，`turn/end` 里是
+`{"message":"terminated","code":"UNKNOWN"}`，没有走重试。
+
+根因：
+
+- Antigravity 的响应体在 socket 层被切断时，undici 抛出的错误消息就是 `terminated`；
+  旧实现让 `streamResponseToChunks()` 的 `reader.read()` 异常**原样冒泡**，
+  宿主按未知错误处理（code `UNKNOWN`），而重试策略只覆盖
+  `EMPTY_RESPONSE / RATE_LIMIT / SERVER / TIMEOUT / TRANSPORT`，于是**一次断连就终止整轮**；
+- `classifyAntigravityError()` 当时也不认 `terminated`（只认 network/connection/socket/fetch/ECONN*），
+  所以即使包装了也会落到不可重试的 `ANTIGRAVITY_ERROR`。
+
+修复（0.8.2-patch.13）：
+
+- `streamResponseToChunks()` 的读取循环加 try/catch：`AbortError`/`aborted` → `ABORTED`（不重试），
+  其余统一抛 `LlmError("Antigravity stream read failed: …", classifyAntigravityError(…))`；
+- `classifyAntigravityError()` 把 `terminated`、`other side closed`、`premature close`、
+  `EPIPE`/`ECONNRESET` 归入 `TRANSPORT` → 走宿主重试（最多 5 次，指数退避）。
+- 回归：新增 `test/stream-failure-classification.test.mjs`（4 项），全套 **162/162**。
+
+注意：这只能保证“断连→重试”，断连本身仍可能来自网络/上游；如果连续重试都失败，
+说明是持续性的链路问题（代理、上游限流或本地网络）。
+
+
 ## 2026-11-07 修复：预设 `gemini-cli` 一直不出现（组合缺 `workflowEngine`，被 Web 端当 broken 过滤）
 
 现象：重启后 Agent 预设列表里始终没有「Gemini（CLI 风格）」。

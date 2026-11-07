@@ -2,6 +2,14 @@
 
 本项目遵循 [Keep a Changelog](https://keepachangelog.com/zh-CN/1.1.0/) 格式，版本号遵循 [Semantic Versioning](https://semver.org/lang/zh-CN/)。
 
+## v0.8.2-patch.13 — 2026-11-07
+
+### Fixed
+- **响应体被 socket 切断时整轮直接失败（`terminated` / `UNKNOWN`）**：Antigravity 的流在传输层被切断时 undici 抛出的消息就是 `terminated`，旧实现让 `reader.read()` 异常原样冒泡，宿主按未知错误（`UNKNOWN`）终止整轮，不进入重试策略。现在 `streamResponseToChunks()` 捕获读取异常：`AbortError` → `ABORTED`，其余交给 `classifyAntigravityError()`；分类器同时把 `terminated` / `other side closed` / `premature close` / `EPIPE` / `ECONNRESET` 归入可重试的 `TRANSPORT`（最多 5 次，指数退避）。
+
+### 验证
+- `npm run check` 162/162（新增 `test/stream-failure-classification.test.mjs` 4 项：断连分类、既有分类不回归、读取循环确实包装异常、no-body 仍为 TRANSPORT）
+
 ## v0.8.2-patch.12 — 2026-11-07
 
 ### Fixed
