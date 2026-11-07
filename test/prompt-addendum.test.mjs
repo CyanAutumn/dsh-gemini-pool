@@ -28,6 +28,9 @@ test("every Antigravity family gets delegation guidance", () => {
 
 test("family wording differs where it matters", () => {
   assert.match(buildPromptAddendum("claude-opus-5-5-high"), /decomposition/);
+  for (const id of ["claude-opus-5-5-high", "gemini-4-argon-low", "gemini-3.8-flash-high"]) {
+    assert.match(buildPromptAddendum(id), /justification` to write\/edit\/pwsh unless you also pass `sandbox_permissions/);
+  }
   assert.match(buildPromptAddendum("gemini-4-argon-low"), /Gemini tends to solve tasks serially/);
   const geminiBase = buildPromptAddendum("gemini-3.8-flash-high");
   assert.ok(!/Gemini tends to solve tasks serially/.test(geminiBase), "older Gemini gets the shared text");
