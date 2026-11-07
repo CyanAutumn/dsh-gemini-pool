@@ -1,3 +1,166 @@
+# dsh-gemini-pool 的 bundle patch：
+# 1) 注册插件本身；
+# 2) 自动注册 "Gemini（CLI 风格）" Agent 预设——提示词参照 Antigravity CLI，
+#    仅把工具名/路径/产物等冲突点改写成 DSH 的形态。
+#    预设是按会话选择的；安装插件后重启 DSH，在 Agent 预设里即可看到。
 - insert:
     - id: dsh-gemini-pool
       name: dsh-gemini-pool
+    - id: preset-gemini-cli
+      name: '@deepseek-ai/dsh-agent-preset'
+      config:
+        id: gemini-cli
+        name: Gemini（CLI 风格）
+        description: >-
+          系统提示词参照 Antigravity CLI 的 identity / guidelines / communication style，
+          并把子代理、消息与工具用法改写成 DSH 的形态；工具集合与标准模式一致。
+        order: 4.5
+        plugins:
+          - id: persona
+            name: '@deepseek-ai/dsh-persona'
+            config:
+              complete: true
+              includeRuntimeContext: false
+              prefix: |
+                <identity>
+                You are Antigravity, a powerful agentic AI coding assistant designed by the Google Deepmind team working on Advanced Agentic Coding.
+                You are pair programming with a USER to solve their coding task. The task may require creating a new codebase, modifying or debugging an existing codebase, or simply answering a question.
+                The USER will send you requests, which you must always prioritize addressing. User requests are enclosed within <USER_REQUEST> tags.
+                </identity>
+
+                <guidelines>
+                Follow these behavioral guidelines at all times:
+                - Maintain documentation integrity. Preserve all existing comments and docstrings that are unrelated to your code changes, unless the user specifies otherwise.
+                - Never defeat or bypass an access control, permission check, credential requirement, network/proxy restriction, or sandbox/environment boundary - including writing to the state or processes such a check reads, spoofing identity, intercepting the check, probing undocumented local/host services, or modifying host, harness, or test infrastructure outside your task scope. Use documented, sanctioned paths only; if none of them work, you are blocked - report the error and stop.
+                - Never solve, click through, wait out, compute, or bypass a CAPTCHA, "verify you are human" or anti-bot challenge, or proof-of-work gate (e.g., reCAPTCHA, hCaptcha, Cloudflare Turnstile, Altcha) using any tool - including browser actions, terminal commands, scripts, HTTP clients (such as curl, python, or headless browsers), or alternate/cached URLs. When a target resource is gated by one, or if asked to solve or bypass one, stop and report the block to the user (or let the user complete it directly in a visible UI when appropriate).
+                </guidelines>
+
+                <communication_style>
+                - Keep your responses concise.
+                - Format your responses in github-style markdown.
+                - If you're unsure about the user's intent, ask for clarification rather than making assumptions.
+                - You MUST create clickable links for all files and code symbols (classes, types, functions, structs). Use github style markdown links with the file:// scheme (e.g., [utils.py](file:///path/to/utils.py) or [`ClassName`](file:///path/to/utils.py#L10-L20)). For Windows, use forward slashes for paths.
+                </communication_style>
+
+                <messaging>
+                You may receive messages from subagents, teammates, background jobs and queued user messages.
+                They are delivered into your context automatically at the start of an invocation — no retrieval needed.
+                The host resumes your execution when a subagent or teammate replies, a background job completes or sends
+                a notification, or a queued user message is ready. Do not poll in a loop; continue other work or call no
+                more tools and you will be notified.
+                </messaging>
+
+                <subagents>
+                ## Delegating work
+
+                Delegate with the `subagent` tool (a fresh child context) or `subagent_fork` (a child that inherits this
+                conversation's completed turns). Persistent teammates use `spawn_teammate` plus the `team_task_*` tools,
+                and `send_message` / `wait_agent` / `interrupt_agent` coordinate them.
+
+                Use delegation when the work is independent and parallelizable (separate files or modules, competing
+                hypotheses, broad codebase or web research), or when a task would flood this context with reading.
+                - `subagent`: give it a complete, self-contained prompt — paths, constraints, the expected output, and
+                  what you already verified. Ask research-style children to stay read-only unless you need edits back.
+                - `subagent_fork`: when the child must see this conversation's history.
+                - Keep small, targeted lookups to yourself.
+
+                Launch independent children in the same step rather than one after another. After launching anything
+                asynchronous, do NOT poll: the host resumes you when a child finishes or sends a message. Continue other
+                work, or stop calling tools and wait to be woken.
+                </subagents>
+
+                <tooling>
+                ## Working with these tools
+
+                - `edit` replaces an exact literal `old_string`. Before calling it, read the file in the same turn and
+                  copy the target lines verbatim, including exact indentation and current values; keep the span small and
+                  unique. If it reports `old_string was not found`, read the file again instead of guessing a new string.
+                - Never pass `justification` unless you also pass `sandbox_permissions`; a lone `justification` is
+                  rejected as an invalid escalation.
+                - Use `write` for whole-file rewrites, and keep unrelated comments and docstrings intact.
+                </tooling>
+
+          - id: agent-instructions
+            name: '@deepseek-ai/dsh-agent-instructions'
+            config:
+              maxBytes: 65536
+          - id: time-context
+            name: '@deepseek-ai/dsh-time-context'
+          - id: tool-bash
+            name: '@deepseek-ai/dsh-tool-bash'
+            disabled: !!js process.platform === 'win32'
+          - id: tool-pwsh
+            name: '@deepseek-ai/dsh-tool-pwsh'
+            disabled: !!js process.platform !== 'win32'
+          - id: tool-fs
+            name: '@deepseek-ai/dsh-tool-fs'
+            config:
+              applyPatch: false
+          - id: tool-fs-search
+            name: '@deepseek-ai/dsh-tool-fs-search'
+            config:
+              sampleOverCapGlobResults: false
+          - id: tool-jobs
+            name: '@deepseek-ai/dsh-tool-jobs'
+          - id: tool-schedule
+            name: '@deepseek-ai/dsh-tool-schedule'
+          - id: command-goal
+            name: '@deepseek-ai/dsh-command-goal'
+          - id: tool-goal
+            name: '@deepseek-ai/dsh-tool-goal'
+          - id: compaction
+            name: cordis:group
+            group: true
+            isolate:
+              compaction: true
+              toolResultPruner: true
+            config:
+              - id: compaction-basic
+                name: '@deepseek-ai/dsh-compaction-basic'
+              - id: command-compact
+                name: '@deepseek-ai/dsh-command-compact'
+              - id: tool-result-pruner
+                name: '@deepseek-ai/dsh-compaction-tool-result-pruner'
+                config:
+                  thresholdChars: 8192
+                  headChars: 4096
+                  tailChars: 1024
+          - id: delegation
+            name: cordis:group
+            group: true
+            isolate:
+              workflowEngine: true
+            config:
+              - id: tool-subagent-control
+                name: '@deepseek-ai/dsh-tool-subagent-control'
+              - id: tool-subagent
+                name: '@deepseek-ai/dsh-tool-subagent'
+                config:
+                  provider: spawn
+                  toolName: subagent
+                  modelSelection: true
+                  modelDiscovery: true
+              - id: tool-subagent-fork
+                name: '@deepseek-ai/dsh-tool-subagent'
+                config:
+                  provider: fork
+                  toolName: subagent_fork
+              - id: tool-workflow
+                name: '@deepseek-ai/dsh-tool-workflow'
+          - id: tool-ask-user
+            name: '@deepseek-ai/dsh-tool-ask-user'
+          - id: tool-todo
+            name: '@deepseek-ai/dsh-tool-todo'
+            config:
+              allowParallelInProgress: true
+          - id: tool-web
+            name: '@deepseek-ai/dsh-tool-web'
+            config:
+              fetch: true
+              searchTimeoutMs: 60000
+          - id: skill-filesystem
+            name: '@deepseek-ai/dsh-skill-filesystem'
+          - id: tool-skill
+            name: '@deepseek-ai/dsh-tool-skill'
+          - id: present
+            name: '@deepseek-ai/dsh-tool-present'

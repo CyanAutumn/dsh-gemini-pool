@@ -4,6 +4,19 @@
 都经过本地修补。上游发新版并覆盖本包时，需要重新打补丁（补丁与全部证据见同目录的
 `docs/`、`captured/`，以及 Desktop 上 `dsh-gemini-pool-patched/0.8.2-live-catalog.patch`）。
 
+## 2026-11-07 增补：内置「Gemini（CLI 风格）」Agent 预设（预设提示词，不再塞进插件）
+
+插件不再向 `systemInstruction` 追加任何文本（原来的委派/escalation/edit 追加段落已删除）。
+改为在插件自己的 bundle patch（`cordis.patch.yml`）里 **自动注册一个 Agent 预设** `gemini-cli`：
+
+- 提示词：Antigravity CLI 的 `<identity>` / `<guidelines>` / `<communication_style>` 原文，
+  子代理与消息协议改写成 DSH 形态（`subagent` / `subagent_fork` / `spawn_teammate` / `wait_agent`），
+  另加一节 DSH 工具用法（edit 的精确 `old_string`、`justification` 必须与 `sandbox_permissions` 同时出现）；
+- 插件列表：persona(`complete: true`) + agent-instructions + time-context + 文件/搜索/jobs/schedule/
+  goal/压缩/子代理/网页/技能/present 等，与标准模式一致；
+- 预设是**按会话**选择的，不会随模型自动切换；安装插件并重启 DSH 后，在 Agent 预设里选「Gemini（CLI 风格）」。
+
+
 ## 2026-11-07 增补：edit 使用纪律（减少 old_string was not found）
 
 实测某会话 21 次 `edit` 有 5 次 `old_string was not found`：模型是**凭记忆重构** `old_string`，
