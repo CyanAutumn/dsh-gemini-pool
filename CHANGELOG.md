@@ -2,6 +2,15 @@
 
 本项目遵循 [Keep a Changelog](https://keepachangelog.com/zh-CN/1.1.0/) 格式，版本号遵循 [Semantic Versioning](https://semver.org/lang/zh-CN/)。
 
+## v0.8.2-patch.12 — 2026-11-07
+
+### Fixed
+- **「Gemini（CLI 风格）」预设装好后从不出现**：预设的 `delegation` 组声明了 `tool-workflow`，它注入 `workflowEngine`，但提供该服务的 `@deepseek-ai/dsh-workflow-ptc` 行被漏掉了（宿主侧该行是 disabled）。缺服务使该行一直 pending，`dsh-agent-preset-registry` 在 `loader.await()` 后判定预设 `broken`，而 Web 端预设选择器会过滤 broken 行（`broken === void 0`），所以列表里看不到；`plugin_manager` 显示声明行 `active` 只是声明状态，不含组合诊断。修复：在 `delegation` 组补 `workflow-ptc`（`config.provider: spawn`），与官方 `standard` 预设同组结构一致；修复后本预设 27 行与 `standard` 逐行比对无多余行（仅少刻意不带的 plan-mode 与两个 plugin-manager 工具）。
+
+### 验证
+- `npm run check` 158/158 保持通过
+- 预设 YAML 结构校验 + 与 `dsh-web-app/presets/standard.patch.yml` 逐行 diff（无 ours-only 行、无重复 id）
+
 ## v0.8.2-patch.11 — 2026-11-07
 
 ### Fixed

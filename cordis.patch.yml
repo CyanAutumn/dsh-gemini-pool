@@ -155,6 +155,14 @@
                 config:
                   provider: fork
                   toolName: subagent_fork
+              # Provides the `workflowEngine` service `tool-workflow` injects.
+              # Without it the tool row waits forever, the preset audits as
+              # broken, and the Web preset chip hides it (broken rows are
+              # filtered out) — which is why the preset never appeared.
+              - id: workflow-ptc
+                name: '@deepseek-ai/dsh-workflow-ptc'
+                config:
+                  provider: spawn
               - id: tool-workflow
                 name: '@deepseek-ai/dsh-tool-workflow'
           - id: tool-ask-user

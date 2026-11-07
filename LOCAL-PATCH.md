@@ -4,6 +4,29 @@
 都经过本地修补。上游发新版并覆盖本包时，需要重新打补丁（补丁与全部证据见同目录的
 `docs/`、`captured/`，以及 Desktop 上 `dsh-gemini-pool-patched/0.8.2-live-catalog.patch`）。
 
+## 2026-11-07 修复：预设 `gemini-cli` 一直不出现（组合缺 `workflowEngine`，被 Web 端当 broken 过滤）
+
+现象：重启后 Agent 预设列表里始终没有「Gemini（CLI 风格）」。
+
+根因（代码层确认，非缓存/重启问题）：
+
+- 预设的 `delegation` 组里声明了 `tool-workflow`（`@deepseek-ai/dsh-tool-workflow`），它的
+  `inject = ["tools", "workflowEngine", "systemPrompt"]`；`workflowEngine` 由
+  `@deepseek-ai/dsh-workflow-ptc` 提供，而这一行在预设里被漏掉了（Host 侧的 `workflow-ptc` 是 disabled）。
+- 缺服务时该行一直 pending。`dsh-agent-preset-registry` 的 `diagnostic()` 在
+  `loader.await()` 后仍 pending 就判为 broken（`record.broken`），而 Web 端预设选择器
+  （`dsh-client-ui-agent-preset/lib/client.js`）**过滤掉 broken 行**
+  （`presets.filter((preset) => preset.broken === void 0)`），于是这个预设从头到尾都不显示。
+- 注意 `plugin_manager list_plugins` 里 `include:preset-gemini-cli` 一直是 `active`：那是
+  **声明行**的状态，组合挂载失败只体现在 registry 的 `broken` 诊断里，所以之前看起来"一切正常"。
+
+修复：在 `delegation` 组补 `workflow-ptc`（`@deepseek-ai/dsh-workflow-ptc`, `config.provider: spawn`），
+与官方 `standard` 预设的同组结构一致。修复后本预设的 27 行插件与 `standard` 预设逐行比对：
+**没有 standard 里不存在的行**，只少了刻意不带的 `planning`(plan-mode) 与两个 plugin-manager 工具。
+
+版本 0.8.2-patch.12；bundle patch 在启动时读取，需要重启 DSH 生效。
+
+
 ## 2026-11-07 增补：模型类过程报错修复（工具参数修复 + 失败回注）
 
 审计会话 `session-02cf33e9`（Gemini 4 Argon，94 次 edit / 330 次工具调用）逐条统计出的
