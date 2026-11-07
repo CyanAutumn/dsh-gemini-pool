@@ -4,6 +4,21 @@
 都经过本地修补。上游发新版并覆盖本包时，需要重新打补丁（补丁与全部证据见同目录的
 `docs/`、`captured/`，以及 Desktop 上 `dsh-gemini-pool-patched/0.8.2-live-catalog.patch`）。
 
+## 2026-11-07 变更：`<subagents>` 改为「Delegation-First」版本（用户改写，由 99ae1f9e 会话起草）
+
+用户在另一个会话（`session-99ae1f9e`，16:52:51）里把预设 persona 的 `<subagents>` 段改写成了
+**Delegation-First** 版本：明确 Lead 编排者角色、四条“必须委派”的场景（跨 >3 文件探查、
+可并行子任务/批量操作、重背景任务、竞争假设）、以及在 >3 步计划前先问“哪些能下放”等规则。
+该改写当时只落在**安装源目录**（`dsh-plugins\dsh-gemini-pool-patched\...`，不是 git 仓库），
+随后我同步仓库→安装源时把它覆盖了；现从会话记录里原样恢复并提交进仓库。
+
+同时保留同一天对 `<guidelines>` 的删除（见上一节）。当前 persona 结构：
+`<identity>` → `<communication_style>` → `<messaging>` → `<subagents>`（Delegation-First）→ `<tooling>`，
+提示词 5,096 字符。
+
+版本 0.8.2-patch.15。
+
+
 ## 2026-11-07 变更：预设 persona 删除 `<guidelines>` 整段
 
 按用户要求，`preset-gemini-cli` 的 `persona.prefix` 里删掉了整段 `<guidelines>`（文档完整性、

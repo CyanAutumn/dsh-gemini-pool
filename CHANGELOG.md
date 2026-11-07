@@ -2,6 +2,11 @@
 
 本项目遵循 [Keep a Changelog](https://keepachangelog.com/zh-CN/1.1.0/) 格式，版本号遵循 [Semantic Versioning](https://semver.org/lang/zh-CN/)。
 
+## v0.8.2-patch.15 — 2026-11-07
+
+### Changed
+- **恢复并提交用户改写的 `<subagents>`（Delegation-First）**：另一会话（99ae1f9e）16:52 把该段改写为「Lead 编排者 + 四条必须委派场景 + >3 步先问能否下放」，但只写进了安装源目录（非 git），随后被仓库→安装源的同步覆盖。现从会话记录原样恢复进仓库，与同日删除 `<guidelines>` 的改动合并；persona 现为 identity → communication_style → messaging → subagents(Delegation-First) → tooling，共 5,096 字符。
+
 ## v0.8.2-patch.14 — 2026-11-07
 
 ### Changed
