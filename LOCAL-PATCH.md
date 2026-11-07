@@ -1,8 +1,60 @@
 # 本地补丁说明（基于上游 dsh-gemini-pool 0.8.2）
 
 这个包**不是**上游原样发布：`lib/models.js`、`lib/index.js`、`lib/client.js`、`package.json`
-都经过本地修补。上游发新版并覆盖本包时，需要重新打补丁。
+都经过本地修补。上游发新版并覆盖本包时，需要重新打补丁（补丁与全部证据见同目录的
+`docs/`、`captured/`，以及 Desktop 上 `dsh-gemini-pool-patched/0.8.2-live-catalog.patch`）。
 
+## 2026-11-07 增补：edit 使用纪律（减少 old_string was not found）
+
+实测某会话 21 次 `edit` 有 5 次 `old_string was not found`：模型是**凭记忆重构** `old_string`，
+里面的数值已是它想写入的新值，而文件里还是旧值（例：模型写 `speed = 0.08`，文件实际 `speed = 0.10`）。
+
+- 提示词追加段落补充：调用 `edit` 前**同一轮内先 read**，逐字复制 `old_string`（缩进与当前值都要对），
+  保持为少量唯一行；若报 `old_string was not found`，**重新 read** 后重试，不要凭猜测改字符串。
+- `edit` 仍是精确字面匹配（DSH 侧行为，未改动）。
+
+
+## 2026-11-07 增补：escalation 参数说明加固（修复 `invalid escalation`）
+
+`write` / `edit` / `pwsh` 的 schema 里 `justification` 与 `sandbox_permissions` 都是普通可选属性，
+但 DSH 校验要求「只带 `justification`、不带 `sandbox_permissions`」时报
+`invalid escalation: justification is only valid together with sandbox_permissions`；
+Gemini 4 Argon 曾把 `justification` 当成普通说明字段单独填。
+
+- 提示词侧：委派追加段落里补了一句「不要单独传 justification」（`ANTIGRAVITY_PROMPT_ADDENDUM=0` 一起关掉）；
+- schema 侧：`models.js::hardenEscalationSchema()` 在转换时给这类工具的 `justification`
+  描述追加 "ONLY valid together with sandbox_permissions; omit it when you are not requesting escalation."，
+  只对同时含两个字段的工具生效，幂等；
+- 回归：`test/escalation-schema.test.mjs`（用真实 write/edit/pwsh schema 做 fixture）。
+## 2026-11-07 增补：按模型家族追加委派引导（可选，默认开启）
+
+CLI 的 21.7KB 系统提示词里有专门的 `<subagents>` 区块（`invoke_subagent` + self/research/image-generator
+三个具名子代理），而 DSH 只给通用工具描述，导致 Gemini 很少主动起子代理。本补丁在
+`systemInstruction` 末尾追加一段**自写**的委派引导（按 runtime 家族区分文案）：
+
+- `claude-*`：显式分解 + 校验子代理结果；
+- `gemini-4-argon*`：同一批并行发起（Gemini 倾向串行自己做完）；
+- 其它 gemini / gpt-oss：通用委派说明（独立子任务并行、`subagent_fork` 继承上下文、不要轮询）。
+
+关闭方式：`ANTIGRAVITY_PROMPT_ADDENDUM=0`（默认开启）。实现在 `models.js::buildPromptAddendum()`，
+可单测：`test/prompt-addendum.test.mjs`。
+## 2026-11-07 增补：Gemini 4 / Claude 5.5 / GPT-OSS 适配（CLI 1.5.2 抓包）
+
+用同一个 rea 思路重装了 WSL 里的 `agy`（1.5.2），逐模型抓生成请求，结论：
+
+- **UA 更新**：`antigravity/cli/1.5.2 (… cl=1015175089 …)`（原 1.5.1 / 1014269460）。
+- **thinkingConfig 按家族区分**（此前只给 gemini 发）：
+  - `gemini-4-argon-*`：`{includeThoughts:true, thinkingLevel:LOW|MEDIUM|HIGH}`，`maxOutputTokens 65536`；
+  - `claude-opus/sonnet-5-5-*`：**同样发 thinkingLevel**，`maxOutputTokens 128000`；
+  - `gpt-oss-120b`：`{includeThoughts:true, thinkingBudget:8192}`，`maxOutputTokens 32768`。
+- **tools[].parameters 全部使用大写 Gemini Schema**：Claude 不再是 JSON-Schema 透传；
+- **不再给 Claude 强塞 `toolConfig.validated`**：CLI 只在调用方强制模式时才发；
+- **labels 家族标记**：Claude → `used_claude` / `used_claude_conservative` 均为 `"true"`（high 档也是 true）；
+  GPT-OSS → `used_non_gemini_model:"true"`、`used_claude:"false"`；
+- `maxOutputTokens` 仍取目录端点值（Claude 128k / Argon 64k / GPT-OSS 32k），静态兜底表同步补了 Claude 5.5 = 128000。
+
+抓包证据（本地，未入库）：`captured/cli-1.5.2/`；可回归的自检：`test/model-family-parity.test.mjs`
+（用脱敏后的 fixtures 断言 thinkingConfig / labels / 工具 schema / 输出上限与 CLI 逐字段一致）。
 ## 包含的修补
 
 ### 1. 模型目录改为按端点实时拉取
