@@ -4,6 +4,18 @@
 都经过本地修补。上游发新版并覆盖本包时，需要重新打补丁（补丁与全部证据见同目录的
 `docs/`、`captured/`，以及 Desktop 上 `dsh-gemini-pool-patched/0.8.2-live-catalog.patch`）。
 
+## 2026-11-07 变更：预设 persona 删除 `<guidelines>` 整段
+
+按用户要求，`preset-gemini-cli` 的 `persona.prefix` 里删掉了整段 `<guidelines>`（文档完整性、
+访问控制/沙箱边界、CAPTCHA 与反机器人挑战那三条行为约束），`<identity>` 与
+`<communication_style>`、`<messaging>`、`<subagents>`、`<tooling>` 保留。
+
+提示词从 4,540 字符降到 **4,015** 字符。注意：删掉的是**提示词层的**行为约束，
+宿主侧的工具权限、沙箱与审批策略不受影响（那些由 DSH 自己的插件与权限预设负责）。
+
+版本 0.8.2-patch.14；bundle patch 在启动时读取，需要重启 DSH 生效。
+
+
 ## 2026-11-07 修复：连接被切断时整轮直接失败（`terminated` / UNKNOWN）
 
 现象：`session-45e733d0` 跑到第 77 步时整轮失败，`turn/end` 里是

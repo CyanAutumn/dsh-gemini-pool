@@ -2,6 +2,11 @@
 
 本项目遵循 [Keep a Changelog](https://keepachangelog.com/zh-CN/1.1.0/) 格式，版本号遵循 [Semantic Versioning](https://semver.org/lang/zh-CN/)。
 
+## v0.8.2-patch.14 — 2026-11-07
+
+### Changed
+- **删除「Gemini（CLI 风格）」预设 persona 的 `<guidelines>` 整段**（按用户要求）：`<identity>` / `<communication_style>` / `<messaging>` / `<subagents>` / `<tooling>` 保留，提示词 4,540 → 4,015 字符。仅移除提示词层的行为约束；宿主侧的工具权限、沙箱与审批策略不变。
+
 ## v0.8.2-patch.13 — 2026-11-07
 
 ### Fixed
